@@ -1,2 +1,7 @@
-# douban_movie_vue
-一个类似豆瓣电影的网站，vue前端部分
+# 项目地址
+
+<https://movie.doubans.com>
+
+---
+
+此仓库仅用于vue代码存放和测试，详情请到 [douban_movie](<https://github.com/humingk/douban_movie>) 仓库查看
