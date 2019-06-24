@@ -29,7 +29,7 @@
 </template>
 <script>
   import {
-    url_api_douban, url_douban
+    url_api_douban, url_douban,apikey_api_douban
   } from '../../config';
   export default {
     name: 'usBox',
@@ -46,7 +46,7 @@
     methods: {
       // 北美票房榜
       getUsBox: function () {
-        this.$jsonp(url_api_douban + "/v2/movie/us_box").then(response => {
+        this.$jsonp(url_api_douban + "/v2/movie/us_box?apikey=" + apikey_api_douban).then(response => {
           if (response.subjects && response.subjects.length != 0) {
             console.log("douban us box: ");
             console.log(response);

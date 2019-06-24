@@ -907,10 +907,10 @@
           // 获取电影资源信息
           if (this.movieBase.name) {
             this.getBtbtdyResource(this.movieBase.name);
-            this.getLoldyttResource(this.movieBase.name);
+            //this.getLoldyttResource(this.movieBase.name);
           } else if (responseApi.title) {
             this.getBtbtdyResource(responseApi.title);
-            this.getLoldyttResource(responseApi.title);
+            //this.getLoldyttResource(responseApi.title);
           } else {
             console.log("there is no name to get movie resource...")
           }

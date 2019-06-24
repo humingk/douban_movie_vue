@@ -16,8 +16,8 @@
                    v-for="(item,index) in result.data">
                 <div class="item-root">
                   <a :href="url_vue_base+'/subject/'+item.movieId" target="_blank" class="cover-link">
-                    <!--<img :src="'../../static/images/m/m'+index%4+'.png'" :alt="item.name" class="cover">-->
-                    <img v-if="item.image" :src="item.image" :alt="item.name" rel="noreferrer" class="cover">
+                    <img :src="'../../static/images/m/m'+index%4+'.png'" :alt="item.name" class="cover">
+<!--                    <img v-if="item.image" :src="item.image" :alt="item.name" rel="noreferrer" class="cover">-->
                   </a>
                   <div class="detail">
                     <div class="title">
@@ -107,8 +107,6 @@
         noMovie: "",
         // 确定搜索失败提示时间
         noMovieTime: 2000,
-        // 从base(true)加载数据还是从API(false)加载数据
-        isBaseOrApi:true
       }
     },
     created: function () {
@@ -118,8 +116,18 @@
       // this.getSearchResult(this.$route.query.search_text, this.start, this.count);
       // 定时器 是否搜到电影
       this.isMovieSearched(this.$route.query.search_text);
+
+      // 服务器端和API端切换须知：
+      // 1. img
+      // 2. created
+      // 3. loadMore
+
       // 从api加载数据
-      this.getApiSearch(this.$route.query.search_text, this.start, this.count);
+      // 搜索api暂时凉凉 20190512
+      // this.getApiSearch(this.$route.query.search_text, this.start, this.count);
+
+      // 从服务器加载数据
+      this.getSearchResult(this.$route.query.search_text,this.start,this.count);
     },
     methods: {
 
@@ -132,8 +140,8 @@
             count: count
           }
         }).then(response => {
-          // console.log("search result :");
-          // console.log(response);
+          console.log("search result :");
+          console.log(response);
           if (response.data && response.data.code && response.data.message) {
             if (response.data.code == 200 && response.data.message == "success" && response.data.data) {
               this.sResult.push({
@@ -177,13 +185,11 @@
 
       // API 搜索结果 start count
       getApiSearch: function (keyword, start, count) {
-        //  标记从API加载数据
-        this.isBaseOrApi=false;
         this.$jsonp(url_api_douban + "/v2/movie/search?q=" + keyword + "&start=" + start + "&count=" + count+"&apikey="+apikey_api_douban).then(response => {
             if (response.subjects && response.subjects.length != 0) {
               let movies = response.subjects;
-              // console.log("douban movie search:");
-              // console.log(response);
+              console.log("douban movie search:");
+              console.log(response);
               this.apiResult = response;
 
               let data = [];
@@ -270,7 +276,8 @@
           this.busy = true;
           // 延迟，以防止滚动条滚动的时候频繁地请求数据
           setTimeout(load => {
-            this.isBaseOrApi?this.getSearchResult:this.getApiSearch(this.$route.query.search_text, this.start, this.count);
+            // this.getApiSearch(this.$route.query.search_text, this.start, this.count);
+            this.getSearchResult(this.$route.query.search_text, this.start, this.count);
             this.busy = false;
           }, 500);
         }

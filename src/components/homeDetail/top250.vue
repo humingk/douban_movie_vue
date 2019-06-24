@@ -29,7 +29,7 @@
 </template>
 <script>
   import {
-    url_api_douban, url_douban
+    url_api_douban, url_douban,apikey_api_douban
   } from '../../config';
   export default {
     name: 'top250',
@@ -46,7 +46,7 @@
     methods: {
       // api top250
       getTop250: function (start, count) {
-        this.$jsonp(url_api_douban + "/v2/movie/top250?start=" + start + "&count=" + count).then(response => {
+        this.$jsonp(url_api_douban + "/v2/movie/top250?start=" + start + "&count=" + count+"&apikey="+apikey_api_douban).then(response => {
           if (response.count && response.count != 0) {
             console.log("douban top250: ");
             console.log(response);
