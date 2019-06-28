@@ -1,1 +1,135 @@
-/*待完成*/
+/*! CSS Used from: https://img3.doubanio.com/f/shire/52c9997d6d42db58eab418e976a14d5f3eff981e/css/douban.css */
+div,ul,li,h1,h2,h3,form,input{margin:0;padding:0;}
+img{border:0;}
+em{font-style:normal;font-weight:normal;}
+ul{list-style:none;}
+h1,h2,h3{font-size:100%;font-weight:normal;}
+input{font-family:inherit;font-size:inherit;font-style:inherit;font-weight:inherit;}
+input{*font-size:100%;}
+a{cursor:pointer;}
+a:link{color:#37a;text-decoration:none;}
+a:visited{color:#669;text-decoration:none;}
+a:hover{color:#fff;text-decoration:none;background:#37a;}
+a:active{color:#fff;text-decoration:none;background:#f93;}
+a img{border-width:0;vertical-align:middle;}
+.clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
+.clearfix{zoom:1;display:inline-block;_height:1px;}
+.clearfix{display:block;}
+#wrapper{width:675px;margin:0 auto;}
+#content{min-height:420px;}
+#content h1{color:#37a;}
+#content h2{padding-bottom:10px;border-bottom:1px solid #eaeaea;margin-bottom: 18px;}
+.grid-16-8 .article{float:left;width:665px;padding-right:10px;}
+input{margin-right:3px;vertical-align:middle;}
+form{margin:0;padding:0;border:0px;}
+input{font-size:12px;}
+a{cursor:pointer;}
+a:link{color:#37a;text-decoration:none;}
+a:visited{color:#666699;text-decoration:none;}
+a:hover{color:#FFFFFF;text-decoration:none;background:#37a;}
+a:active{color:#FFFFFF;text-decoration:none;background:#FF9933;}
+a img{border-width:0;vertical-align:middle;}
+h1{word-wrap:break-word;display:block;font-size:25px;font-weight:bold;color:#494949;margin:0;padding:0 0 15px 0;line-height:1.1;}
+h3{margin-left:4px;font:14px Arial, Helvetica, sans-serif;color:#666666;margin-bottom:1px;line-height:1.8;background-color:#f2fbf2;}
+ul{list-style-type:none;margin:0;padding:0;}
+h2{font:15px Arial, Helvetica, sans-serif;color:#072;margin:0 0 12px 0;line-height:150%;}
+.ll{float:left;}
+.rr{float:right;}
+.pl{font:12px Arial, Helvetica, sans-serif;line-height:150%;color:#666666;}
+.hidden{display:none;}
+.gact{color:#BBBBBB;font-size:12px;text-align:center;cursor:pointer;}
+.gact a:link{color:#BBBBBB;font-size:12px;text-decoration:none;text-align:center;}
+.gact a:visited{color:#BBBBBB;font-size:12px;text-decoration:none;text-align:center;}
+.gact a:hover{color:#FFFFFF;font-size:12px;border-left:1px solid #FF9999;border-top:1px solid #FF9999;border-right:1px solid #FF3333;border-bottom:1px solid #FF3333;background-color:#773333;text-align:center;}
+.rec-sec{text-align:right;color:#999;}
+.rec-sec span{*zoom:1;}
+.lnk-sharing{display:inline-block;*display:inline;zoom:1;padding:0 8px;vertical-align:middle;*vertical-align:baseline;height:19px;line-height:19px;line-height:21px\9;overflow:hidden;border:1px solid #b9dcd0;-moz-border-radius:3px;-webkit-border-radius:3px;border-radius:3px;}
+a.lnk-sharing:link,a.lnk-sharing:visited{border-color:#e3f1ed;background-color:#f2f8f2;color:#4f946e;}
+a.lnk-sharing:hover,a.lnk-sharing:active{border-color:#c4e2d8;background-color:#eff5ef;}
+.miniform{display:inline;}
+.clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
+.clearfix{zoom:1;display:inline-block;_height:1px;}
+.clearfix{display:block;}
+a.nbg:hover{background:none;}
+.pic-col5{margin:8px 0 0;}
+.pic-col5 li{float:left;display:inline;font-size:0;width:100px;overflow:hidden;margin-right:15px;}
+.pic-col5 .last{margin:0;}
+.mod:after{content:'\0020';display:block;clear:both;}
+.a-btn{display:inline-block;height:20px;line-height:20px;*line-height:22px;line-height:22px\9;overflow:hidden;*display:inline;zoom:1;border-radius:3px;-webkit-border-radius:3px;-moz-border-radius:3px;}
+.a-btn:link,.a-btn:active,.a-btn:hover,.a-btn:visited{color:#797979;background:#fff3e7;border:1px solid #e7d7ca;padding:0 10px;outline:none;}
+/*! CSS Used from: https://img3.doubanio.com/f/movie/8864d3756094f5272d3c93e30ee2e324665855b0/css/movie/base/init.css */
+html .pl,html input{font-size:13px;}
+html h3{font-size:15px;}
+html h2{font-size:16px;}
+html h1{font-size:26px;}
+#wrapper{width:850px;}
+.grid-16-8 .article{width:900px;}
+@media (max-width: 1024px){
+    #wrapper{width:1000px;}
+    body .grid-16-8 .article{padding-right:25px;}
+}
+/*! CSS Used from: https://img3.doubanio.com/f/movie/5c131bbdf002cf3c8ffada7c52640f616de723ce/css/movie/celebrity.css */
+.mod{width:100%;}
+.hd:after,.bd:after{content:'\0020';display:block;clear:both;height:0;}
+.mod{margin-bottom:1.4em;}
+.mod:after{content:'\0020';display:block;clear:both;height:0;}
+.mod h2{font-size:14px;padding-bottom:1em;color:#060;}
+.list-s{clear:both;}
+.list-s li{float:left;text-align:center;}
+.item{*zoom:1;overflow:hidden;}
+.item .pic{float:left;text-align:center;}
+.item .pic span{display:block;}
+.item .info{float:left;text-align:left;line-height:22px;}
+.item .info span{color:#666;font-size: 14px}
+.item .info ul{margin-left:20px;}
+.info li{float:none;text-align:left;}
+.info li span{display:inline;font: 12px Arial,Helvetica,sans-serif;line-height: 150%;color: #666}
+.info .set_font{font-weight:bolder;}
+em{font-style:normal;font-weight:normal;}
+.mod h2{padding-bottom:5px;margin:0;color:#060;}
+#headline{margin-bottom:15px;}
+#headline .gact{margin-top:6px;}
+#headline .info li{width:490px;word-wrap:break-word;overflow:hidden;}
+#opt-bar{overflow:hidden;border-bottom:1px dashed #ddd;zoom:1;padding-bottom:10px;}
+#opt-bar .rr{margin:0;}
+#opt-bar .a-btn{color:#000;display:block;width:44px;padding:0;text-align:center;float:left;margin-right:10px;}
+#opt-bar .ll .rec{display:block;margin-top:2px;float:left;}
+#opt-bar .rec-sec{float:right;line-height:19px;}
+#intro .bd{word-wrap:break-word;overflow:hidden;}
+#intro .bd .short{font-size: 13px;text-indent: 26px;}
+#photos ul{margin-right:-25px;}
+#photos li{width:115px;margin-right:25px;}
+#recent_movies .list-s,#best_movies .list-s{margin-right:-25px;}
+#best_movies .list-s h3{color:#999;background:none;margin:0 0 10px 9px;font-size:16px;text-align:left;letter-spacing:0.1em;height:29px;}
+#recent_movies li,#best_movies li{display:inline;overflow:hidden;width:115px;margin-right:25px;}
+#recent_movies .pic,#best_movies .pic{height:161px;overflow:hidden;}
+#recent_movies .info,#best_movies .info{width:115px;text-align:center;margin-top:5px;}
+#recent_movies .info,#best_movies .info {color:#e09015;font-size:12px;}
+#recent_movies li{color:#666;}
+#recent_movies .list-s h3{color:#999;background:none;margin:0 0 10px 9px;font-size:16px;text-align:left;letter-spacing:0.1em;height:29px;}
+#recent_movies .unreleased{clear:both;padding:10px 0 0 9px;}
+#recent_movies .unreleased li{margin-right:5px;}
+#partners .list-s{margin-right:-21px;}
+#partners .list-s li{display:inline;width:95px;margin:0 21px 10px 0;overflow:hidden;}
+.award li{display:inline;margin-right:5px;}
+.list-s .pic a:hover{background:none;}
+/*! CSS Used from: Embedded */
+.mod{margin-bottom:25px;}
+.mod .hd{margin-bottom:10px;}
+.mod h2{color:#060;font-size:16px}
+/*color:#333d48;*/
+#headline img{width:135px;}
+/*! CSS Used from: Embedded */
+img{max-width:100%;}
+/*! CSS Used from: Embedded */
+#opt-bar .a-btn{color:#000;background:#fff3e7;border:1px solid #e7d7ca;padding:0;outline:none;float:left;height:22px;line-height:22px;width:46px;font:12px Helvetica,Arial,sans-serif;cursor:pointer;}
+/*! CSS Used from: Embedded */
+.bn-sharing{padding-right:10px;background-image:url(//img3.doubanio.com/pics/a1.png)!important;background-repeat:no-repeat!important;background-position:100% -19px!important;*display:inline-block;}
+a.bn-sharing:hover{text-decoration:underline;}
+/*! CSS Used from: https://img3.doubanio.com/dae/accounts/resources/4bf727f/movie/bundle.css */
+input{font-family:inherit;font-size:inherit;font-style:inherit;font-weight:inherit;}
+ul{list-style-type:none;margin:0;padding:0;}
+ul{list-style:none;}
+input{font-size:12px;margin-right:3px;vertical-align:middle;}
+a{cursor:pointer;}
+form{margin:0;padding:0;border:0px;}
