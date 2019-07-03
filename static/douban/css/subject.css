@@ -521,6 +521,6 @@ a{cursor:pointer;}
 .resourceTitle{
   background-color: white;color:#f7097a;border-color: #afa4a4;border-bottom: 1px solid;
 }
-.resourceNext{
+.resourceName{
   border-bottom: 1px solid;border-bottom-color: #c0c0c0;border-top-color:white;
 }
