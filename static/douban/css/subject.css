@@ -100,7 +100,6 @@ table {
 }
 
 #wrapper {
-    width: 950px;
     margin: 0 auto;
 }
 
@@ -119,7 +118,6 @@ table {
 
 .grid-16-8 .article {
     float: left;
-    width: 590px;
     border-right: 1px solid;
     border-color: #e6d7d7;
     padding-right: 5px
@@ -961,13 +959,9 @@ html h1 {
 }
 
 .grid-16-8 .article {
-    width: 675px;
 }
 
 @media (max-width: 1024px) {
-    #wrapper {
-        width: 1000px;
-    }
 
     /*body .grid-16-8 .article{padding-right:25px;}*/
     body .grid-16-8 .article {

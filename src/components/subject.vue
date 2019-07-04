@@ -1,6 +1,6 @@
 <template>
         <div id="subject">
-            <div id="wrapper">
+            <div id="wrapper" stype="width:1040px">
                 <vue-loading v-if="!movieBase.movieId"
                              type="spiningDubbles" color="#d9544e"
                              :size="{ width: '100px', height: '100px' }"></vue-loading>
@@ -14,7 +14,7 @@
                                 :href="url_douban+'/subject/'+movieBase.movieId" target="_blank">点击此处</a>去豆瓣电影)</span>
                     </h1>
                     <div class="grid-16-8 clearfix">
-                        <div class="article">
+                        <div class="article" style="width: 675px">
                             <div class="indent clearfix">
                                 <div class="subjectwrap clearfix">
                                     <div class="subject clearfix">

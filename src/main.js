@@ -13,17 +13,15 @@ import router from './router'
 import VueJsonp from 'vue-jsonp'
 Vue.use(VueJsonp);
 
-// element-ui
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
-Vue.use(ElementUI);
-
 // 瀑布流加载数据
 import infiniteScroll from 'vue-infinite-scroll';
 Vue.use(infiniteScroll);
 
 Vue.config.productionTip = false;
-
+// element-ui
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+Vue.use(ElementUI);
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
