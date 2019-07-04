@@ -30,10 +30,10 @@ ul{list-style-type:none;margin:0;padding:0;}
 ul{list-style:none;}
 input{font-size:12px;margin-right:3px;vertical-align:middle;}
 a{cursor:pointer;}
-.nav{width:100%;min-width:1040px;overflow:hidden;zoom:1;margin-bottom:20px;}
-.nav .nav-wrap{border-bottom:1px solid #e5ebe4;}
-.nav .nav-primary{width:1040px;margin:0 auto;overflow:visible!important;position:relative;padding:10px 0 5px;zoom:1;}
-.nav .nav-logo{float:left;height:45px;width:150px;}
+.nav{width:100%;min-width:1040px;height:130px;overflow:hidden;zoom:1;margin-bottom:10px;}
+/*.nav .nav-wrap{border-bottom:1px solid #e5ebe4;}*/
+.nav .nav-primary{width:1040px;margin:0 auto;overflow:visible!important;position:relative;padding:10px 0 5px;zoom:1;top: 25px}
+.nav .nav-logo{float:left;height:55px;width:180px;}
 /*.nav .nav-logo{float:left;height:45px;width:175px;margin:0 5px 0 0;}*/
 /*.nav .nav-logo a{display:block;width:100%;height:100%;line-height:100em;}*/
 /*.nav .nav-logo a:hover,.nav .nav-logo a:active{background:none!important;}*/
@@ -41,7 +41,7 @@ legend{color:#000;}
 label{font-family:Tahoma;vertical-align:middle;}
 fieldset{border:1px solid #ddd;padding:0 10px;margin-bottom:15px;}
 fieldset legend{color:#666;padding:0 5px;}
-.nav-search{margin-left:145px;overflow:visible!important;position:relative;zoom:1;padding:10px 0 15px 0;}
+.nav-search{margin-left:130px;overflow:visible!important;position:relative;zoom:1;padding:10px 0 15px 0;}
 .nav-search fieldset{border:none;padding:0;margin:0;position:static;}
 .nav-search legend{display:none;}
 .nav-search label{position:absolute;left:11px;top:10px;line-height:30px;cursor:text;color:#bbb;width:auto;}
@@ -60,7 +60,7 @@ form{margin:0;padding:0;border:0px;}
   .nav{min-width:1024px;}
   .nav .nav-primary,.nav .nav-secondary{width:1000px;}
 }
-#db-nav-movie{position:relative;background-color:#e3f5f4;}
+#db-nav-movie{position:relative;background-color:#8bd0e7;}
 #db-nav-movie .nav-wrap{border-color:#e3ebec;}
 #db-nav-movie a:link,#db-nav-movie a:visited{color:#27a;text-decoration:none;}
 #db-nav-movie a:active,#db-nav-movie a:hover{background-color:#27a;color:#fff;}

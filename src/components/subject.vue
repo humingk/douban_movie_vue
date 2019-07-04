@@ -1,32 +1,39 @@
 <template>
-    <div id="subject" v-if="movieBase.movieId">
-        <div id="wrapper">
-            <div id="content">
-                <h1>
-                    <span style="color: #f7097a;">{{movieBase.name}}</span>
-                    <span style="color: #f7097a;" v-if="movieApi.original_title"> {{movieApi.original_title|isEnglish()}}</span>
-                    <span class="year" v-if="movieApi.year">({{movieApi.year}})</span>
-                    <span v-if="!movieApi.id" style="font-size: 16px">(资料不全,查看更多请<a
-                            :href="url_douban+'/subject/'+movieBase.movieId" target="_blank">点击此处</a>去豆瓣电影)</span>
-                </h1>
-                <div class="grid-16-8 clearfix">
-                    <div class="article">
-                        <div class="indent clearfix">
-                            <div class="subjectwrap clearfix">
-                                <div class="subject clearfix">
-                                    <div id="mainpic" class="" v-if="movieApi.images">
-                                        <a class="nbgnbg" v-if="movieApi.images" :href="movieApi.images.large"><img
-                                                :src="movieApi.images.large" rel="noreferrer"></a>
-                                        <p class="gact"></p>
-                                    </div>
-                                    <div class="info">
-                                        <span class="pl" v-if="movieBase.directors.length">导演: </span>
-                                        <span class="attrs" v-for="(item,index) in movieBase.directors"><a
-                                                target="_blank" :href="'/celebrity/'+item.actorId">{{item.name}}</a>{{ index === movieBase.directors.length-1 ? "" : " / " }}</span><br>
-                                        <span class="pl" v-if="movieBase.writers.length">编剧: </span>
-                                        <span class="attrs" v-for="(item,index) in movieBase.writers"><a target="_blank"
-                                                                                                         :href="'/celebrity/'+item.actorId">{{item.name}}</a>{{ index === movieBase.writers.length-1 ? "" : " / " }}</span><br>
-                                        <span id="actorInfo">
+        <div id="subject">
+            <div id="wrapper">
+                <vue-loading v-if="!movieBase.movieId"
+                             type="spiningDubbles" color="#d9544e"
+                             :size="{ width: '100px', height: '100px' }"></vue-loading>
+                <div id="content" v-if="movieBase.movieId">
+                    <h1>
+                        <span style="color:#0597F2;">{{movieBase.name}}</span>
+                        <span style="color:#0597F2;"
+                              v-if="movieApi.original_title"> {{movieApi.original_title|isEnglish()}}</span>
+                        <span class="year" v-if="movieApi.year">({{movieApi.year}})</span>
+                        <span v-if="!movieApi.id" style="font-size: 16px">(资料不全,查看更多请<a
+                                :href="url_douban+'/subject/'+movieBase.movieId" target="_blank">点击此处</a>去豆瓣电影)</span>
+                    </h1>
+                    <div class="grid-16-8 clearfix">
+                        <div class="article">
+                            <div class="indent clearfix">
+                                <div class="subjectwrap clearfix">
+                                    <div class="subject clearfix">
+                                        <div id="mainpic" class="" v-if="movieApi.images">
+                                            <a class="nbgnbg" v-if="movieApi.images" :href="movieApi.images.large"><img
+                                                    :src="movieApi.images.large" rel="noreferrer"></a>
+                                            <p class="gact"></p>
+                                        </div>
+                                        <div class="info">
+                                            <span class="pl" v-if="movieBase.directors.length">导演: </span>
+                                            <span class="attrs" v-for="(item,index) in movieBase.directors"><el-tooltip
+                                                    content="跳转到该导演页面" placement="top"><a
+                                                    target="_blank"
+                                                    :href="'/celebrity/'+item.actorId">{{item.name}}</a></el-tooltip>{{ index === movieBase.directors.length-1 ? "" : " / " }}</span><br>
+                                            <span class="pl" v-if="movieBase.writers.length">编剧: </span>
+                                            <span class="attrs" v-for="(item,index) in movieBase.writers"><el-tooltip
+                                                    content="跳转到该编剧页面" placement="top"><a target="_blank"
+                                                                                          :href="'/celebrity/'+item.actorId">{{item.name}}</a></el-tooltip>  {{ index === movieBase.writers.length-1 ? "" : " / " }}</span><br>
+                                            <span id="actorInfo">
                       <div style="width: 34px;float: left;">
                     <span class="pl" v-if="movieBase.leadingactors.length">演员: </span>
                       </div>
@@ -37,7 +44,8 @@
                     </span>
                       <span class="attrs" v-for="(item,index) in movieBase.leadingactors"
                             v-if="index >= 10 && !brandOrFold">
-                      <a target="_blank" :href="'/celebrity/'+item.actorId">{{item.name}}</a>
+                          <el-tooltip content="跳转到该演员页面" placement="top"><a target="_blank"
+                                                                            :href="'/celebrity/'+item.actorId">{{item.name}}</a> </el-tooltip>
                       {{ index === movieBase.leadingactors.length-1 ? "" : " / " }}
                     </span>
                       <span @click="moreActor()" v-if="movieBase.leadingactors.length>10"
@@ -47,148 +55,164 @@
                       <br>
                       </div>
                     </span>
-                                        <span class="pl" v-if="movieBase.types.length">类型: </span>
-                                        <span class="attrs" v-for="(item,index) in movieBase.types"><a target="_blank"
-                                                                                                       :href="'/tag/'+item.typeName">{{item.typeName}}</a>{{ index === movieBase.types.length-1 ? "" : " / " }}</span><br>
-                                        <span class="tagsInfo">
+                                            <span class="pl" v-if="movieBase.types.length">类型: </span>
+                                            <span class="attrs" v-for="(item,index) in movieBase.types"><el-tooltip
+                                                    content="跳转到该类型页面" placement="top"><a target="_blank"
+                                                                                          :href="'/tag/'+item.typeName">{{item.typeName}}</a> </el-tooltip> {{ index === movieBase.types.length-1 ? "" : " / " }}</span><br>
+                                            <span class="tagsInfo">
                       <div style="width: 34px;float: left;">
                     <span class="pl" v-if="movieBase.tags.length">标签: </span>
                       </div>
                       <div style="overflow:hidden">
-                    <span class="attrs" v-for="(item,index) in movieBase.tags"><a target="_blank"
-                                                                                  :href="'/tag/'+item.tagName">{{item.tagName}}</a>{{ index === movieBase.tags.length-1 ? "" : " / " }}</span><br>
+                    <span class="attrs" v-for="(item,index) in movieBase.tags"> <el-tooltip content="跳转到该标签页面"
+                                                                                            placement="top"> <a
+                            target="_blank"
+                            :href="'/tag/'+item.tagName">{{item.tagName}}</a> </el-tooltip> {{ index === movieBase.tags.length-1 ? "" : " / " }}</span><br>
                       </div>
                     </span>
-                                        <span v-if="imdbApi && imdbApi.Runtime">
+                                            <span v-if="imdbApi && imdbApi.Runtime">
                     <span class="pl">时长: </span>
                     <span class="attrs">{{imdbApi.Runtime}}</span><br>
                     </span>
-                                        <span v-if="imdbApi && imdbApi.Country">
+                                            <span v-if="imdbApi && imdbApi.Country">
                     <span class="pl">地区: </span>
                     <span class="attrs">{{imdbApi.Country}}</span><br>
                     </span>
-                                        <span class="pl" v-if="movieBase.types.length">上映时间: </span>
-                                        <span class="attrs" v-for="(item,index) in movieBase.releasetimes">{{item.timeArea}}{{ index === movieBase.releasetimes.length-1 ? "" : " / " }}</span><br>
-                                        <span class="pl" v-if="movieBase.movieId">豆瓣电影: </span>
-                                        <span class="attrs"><a target="_blank"
-                                                               :href="url_douban+'/subject/'+movieBase.movieId">{{movieBase.movieId}}</a></span><br>
-                                        <span v-if="movieBase.imdbId || imdbApi.imdbID">
+                                            <span class="pl" v-if="movieBase.types.length">上映时间: </span>
+                                            <span class="attrs" v-for="(item,index) in movieBase.releasetimes">{{item.timeArea}}{{ index === movieBase.releasetimes.length-1 ? "" : " / " }}</span><br>
+                                            <span class="pl" v-if="movieBase.movieId">豆瓣电影: </span>
+                                            <span class="attrs">
+                                        <el-tooltip content="跳转到豆瓣电影" placement="top">
+                                            <a target="_blank"
+                                               :href="url_douban+'/subject/'+movieBase.movieId">{{movieBase.movieId}}</a>
+                                        </el-tooltip>
+                                        </span><br>
+                                            <span v-if="movieBase.imdbId || imdbApi.imdbID">
                     <span class="pl">IMDB: </span>
                     <span class="attrs" v-if="movieBase.imdbId"><a target="_blank"
                                                                    :href="url_imdb+'/title/'+movieBase.imdbId">{{movieBase.imdbId}}</a></span>
-                      <span class="attrs" v-if="!movieBase.imdbId && imdbApi.imdbID"><a target="_blank"
-                                                                                        :href="url_imdb+'/title/'+imdbApi.imdbID">{{imdbApi.imdbID}}</a></span>
+                      <span class="attrs" v-if="!movieBase.imdbId && imdbApi.imdbID"><el-tooltip content="跳转到IMDB"
+                                                                                                 placement="top"><a
+                              target="_blank"
+                              :href="url_imdb+'/title/'+imdbApi.imdbID">{{imdbApi.imdbID}}</a></el-tooltip></span>
                     </span>
-                                    </div>
-                                </div>
-                                <div id="interest_sectl">
-                                    <!--豆瓣评分-->
-                                    <div class="rating_wrap clearbox">
-                                        <div class="clearfix">
-                                            <div class="rating_logo ll">
-                                                <a :href="url_douban" target="_blank">
-                                                    豆瓣电影
-                                                </a>
-                                            </div>
-                                            <div class="output-btn-wrap rr" style="">
-                                            </div>
-                                        </div>
-                                        <div class="rating_self clearfix">
-                                            <strong class="ll rating_num">{{movieBase.rate==0?'囧':movieBase.rate}}</strong>
-                                            <span content="10.0"></span>
-                                            <div class="rating_right ">
-                                                <div :class="'ll bigstar '+getBigRateType(movieBase.rate)"></div>
-                                                <div class="rating_sum">
-                                                    <div class="rating_people"><span>
-                            <a :href="url_douban+'/subject/'+movieBase.movieId+'/collections'" target="_blank"
-                               v-if="movieApi.id">
-                            {{movieApi.rating.average==0?'仅':''}}{{movieApi.ratings_count|thousands()}}人评价
-                            </a>
-                          </span>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
-                                    <!--IMDB评分-->
-                                    <div v-if="imdbApi.imdbID" class="rating_wrap clearbox">
-                                        <div class="clearfix">
-                                            <div class="rating_logo ll">
-                                                <a :href="url_imdb" target="_blank">
-                                                    IMDB
-                                                </a>
-                                            </div>
-                                            <div class="output-btn-wrap rr" style="">
-                                            </div>
-                                        </div>
-                                        <div class="rating_self clearfix">
-                                            <strong class="ll rating_num">{{imdbApi.imdbRating=='N/A'?'囧':imdbApi.imdbRating}}</strong>
-                                            <span content="10.0"></span>
-                                            <div class="rating_right ">
-                                                <div :class="'ll bigstar '+getBigRateTypeForImdb(imdbApi.imdbRating)"></div>
-                                                <div class="rating_sum">
-                                                    <div class="rating_people">
-                            <span>
-                            <a target="_blank" :href="url_imdb+'/title/'+movieBase.imdbId">
-                              {{imdbApi.imdbVotes=='N/A'?'暂时无':imdbApi.imdbVotes}}人评价
-                            </a>
-                            </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--Metacritic-->
-                                    <div v-if="imdbApi.Ratings && imdbApi.Ratings.length>1">
-                                        <div v-if="item.Source=='Rotten Tomatoes'" class="rating_wrap clearbox"
-                                             v-for="item in imdbApi.Ratings">
+                                    <div id="interest_sectl">
+                                        <!--豆瓣评分-->
+                                        <div class="rating_wrap clearbox">
                                             <div class="clearfix">
                                                 <div class="rating_logo ll">
-                                                    <a :href="url_metacritic" target="_blank">
-                                                        MTC
+                                                    <a :href="url_douban" target="_blank">
+                                                        豆瓣电影
                                                     </a>
                                                 </div>
                                                 <div class="output-btn-wrap rr" style="">
                                                 </div>
                                             </div>
                                             <div class="rating_self clearfix">
-                                                <strong class="ll rating_num" v-if="item.Value!='20%'">{{item.Value|fixSlish()}}</strong>
-                                                <strong class="ll rating_num" v-if="item.Value=='20%'">囧</strong>
+                                                <strong class="ll rating_num">{{movieBase.rate==0?'囧':movieBase.rate}}</strong>
                                                 <span content="10.0"></span>
                                                 <div class="rating_right ">
-                                                    <div :class="'ll bigstar '+getBigRateTypeForMetacritic(item.Value)"></div>
+                                                    <div :class="'ll bigstar '+getBigRateType(movieBase.rate)"></div>
                                                     <div class="rating_sum">
-                                                        <div class="rating_people" v-if="movieApi.original_title">
-                                                            <a target="_blank"
-                                                               :href="url_metacritic+'/movie/'+getMetacriticName(movieApi.original_title)">
-                                                                Metacritic -->
-                                                            </a>
+                                                        <div class="rating_people"><span>
+                            <el-tooltip content="跳转到豆瓣电影" placement="top">
+<a :href="url_douban+'/subject/'+movieBase.movieId+'/collections'" target="_blank"
+   v-if="movieApi.id">
+                            {{movieApi.rating.average==0?'仅':''}}{{movieApi.ratings_count|thousands()}}人评价
+</a></el-tooltip>
+                          </span>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div v-if="item.Source=='Metacritic'" class="rating_wrap clearbox"
-                                             v-for="item in imdbApi.Ratings">
+                                        <!--IMDB评分-->
+                                        <div v-if="imdbApi.imdbID" class="rating_wrap clearbox">
                                             <div class="clearfix">
                                                 <div class="rating_logo ll">
-                                                    <a :href="url_tomato" target="_blank">
-                                                        烂番茄
+                                                    <a :href="url_imdb" target="_blank">
+                                                        IMDB
                                                     </a>
                                                 </div>
                                                 <div class="output-btn-wrap rr" style="">
                                                 </div>
                                             </div>
                                             <div class="rating_self clearfix">
-                                                <strong class="ll rating_num">{{item.Value|fixPercent()}}</strong>
+                                                <strong class="ll rating_num">{{imdbApi.imdbRating=='N/A'?'囧':imdbApi.imdbRating}}</strong>
                                                 <span content="10.0"></span>
                                                 <div class="rating_right ">
-                                                    <div :class="'ll bigstar '+getBigRateTypeForTomatoes(item.Value)"></div>
-                                                    <div class="rating_sum" v-if="movieApi.original_title">
-                                                        <a target="_blank"
-                                                           :href="url_tomato+'/m/'+getTomatoName(movieApi.original_title)">
-                                                            RTomatoes -->
+                                                    <div :class="'ll bigstar '+getBigRateTypeForImdb(imdbApi.imdbRating)"></div>
+                                                    <div class="rating_sum">
+                                                        <div class="rating_people">
+                            <span>
+                            <el-tooltip content="跳转到IMDB" placement="top">
+<a target="_blank" :href="url_imdb+'/title/'+movieBase.imdbId">
+                              {{imdbApi.imdbVotes=='N/A'?'暂时无':imdbApi.imdbVotes}}人评价
+</a></el-tooltip>
+                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div v-if="imdbApi.Ratings && imdbApi.Ratings.length>1">
+                                            <div v-if="item.Source=='Rotten Tomatoes'" class="rating_wrap clearbox"
+                                                 v-for="item in imdbApi.Ratings">
+                                                <div class="clearfix">
+                                                    <div class="rating_logo ll">
+                                                        <a :href="url_metacritic" target="_blank">
+                                                            MTC
                                                         </a>
+                                                    </div>
+                                                    <div class="output-btn-wrap rr" style="">
+                                                    </div>
+                                                </div>
+                                                <div class="rating_self clearfix">
+                                                    <strong class="ll rating_num" v-if="item.Value!='20%'">{{item.Value|fixSlish()}}</strong>
+                                                    <strong class="ll rating_num" v-if="item.Value=='20%'">囧</strong>
+                                                    <span content="10.0"></span>
+                                                    <div class="rating_right ">
+                                                        <div :class="'ll bigstar '+getBigRateTypeForMetacritic(item.Value)"></div>
+                                                        <div class="rating_sum">
+                                                            <div class="rating_people" v-if="movieApi.original_title">
+                                                                <el-tooltip content="跳转到 Rotten Tomatoes"
+                                                                            placement="top"><a
+                                                                        target="_blank"
+                                                                        :href="url_metacritic+'/movie/'+getMetacriticName(movieApi.original_title)">
+                                                                    Metacritic -->
+                                                                </a></el-tooltip>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--Metacritic-->
+                                            <div v-if="item.Source=='Metacritic'" class="rating_wrap clearbox"
+                                                 v-for="item in imdbApi.Ratings">
+                                                <div class="clearfix">
+                                                    <div class="rating_logo ll">
+                                                        <a :href="url_tomato" target="_blank">
+                                                            烂番茄
+                                                        </a>
+                                                    </div>
+                                                    <div class="output-btn-wrap rr" style="">
+                                                    </div>
+                                                </div>
+                                                <div class="rating_self clearfix">
+                                                    <strong class="ll rating_num">{{item.Value|fixPercent()}}</strong>
+                                                    <span content="10.0"></span>
+                                                    <div class="rating_right ">
+                                                        <div :class="'ll bigstar '+getBigRateTypeForTomatoes(item.Value)"></div>
+                                                        <div class="rating_sum" v-if="movieApi.original_title">
+                                                            <el-tooltip content="跳转到 Metacritic" placement="top"><a
+                                                                    target="_blank"
+                                                                    :href="url_tomato+'/m/'+getTomatoName(movieApi.original_title)">
+                                                                RTomatoes -->
+                                                            </a></el-tooltip>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -196,500 +220,545 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="related-info">
-                            <a name="intro"></a>
-                            <h2>
-                                <i class="">剧情简介......</i>
-                            </h2>
-                            <div class="indent" id="link-report">
+
+                            <div class="related-info">
+                                <a name="intro"></a>
+                                <h2>
+                                    <i class="">剧情简介......</i>
+                                </h2>
+                                <div class="indent" id="link-report">
                         <span class="summary" v-if="movieApi.summary">
                         {{movieApi.summary}}
                        </span>
+                                </div>
                             </div>
-                        </div>
-                        <div id="celebrities" class="celebrities related-celebrities">
-                            <h2>
-                                <i class>演职员列表......</i>
-                                <span class="pl"><a :href="'/subject/'+movieBase.movieId+'/celebrities'"
-                                                    target="_blank">
-                  (共计{{movieBase.directors.length+movieBase.writers.length + movieBase.leadingactors.length}}人)</a></span>
-                            </h2>
-                            <ul class="celebrities-list from-subject __oneline">
-                                <li class="celebrity" v-for="item in movieApi.directors">
-                                    <a :href="'/celebrity/'+item.id" target="_blank" class="">
-                                        <div class="avatar">
-                                            <img :src="item.avatars.large" v-if="item.avatars" rel="noreferrer">
-                                        </div>
-                                    </a>
-                                    <a :href="'/celebrity/'+item.id" target="_blank" class="">
-                                        <div class="info">
-                                            <span class="name">{{item.name}}</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="celebrity" v-for="item in movieApi.writers">
-                                    <a :href="'/celebrity/'+item.id" target="_blank" class="">
-                                        <div class="avatar">
-                                            <img :src="item.avatars.large" v-if="item.avatars" rel="noreferrer">
-                                        </div>
-                                    </a>
-                                    <a :href="'/celebrity/'+item.id" target="_blank" class="">
-                                        <div class="info">
-                                            <span class="name">{{item.name}}</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="celebrity" v-for="(item,index) in movieApi.casts" v-if="index < 3">
-                                    <a :href="'/celebrity/'+item.id" target="_blank" class="">
-                                        <div class="avatar">
-                                            <img :src="item.avatars.large" v-if="item.avatars" rel="noreferrer">
-                                        </div>
-                                    </a>
-                                    <a :href="'/celebrity/'+item.id" target="_blank" class="">
-                                        <div class="info">
-                                            <span class="name">{{item.name}}</span>
-                                        </div>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div id="related-pic" class="related-pic">
-                            <h2>
-                                <i class>图片列表......</i>
-                                <span class="pl"><a :href="'/subject/'+movieBase.movieId+'/all_photos'"
-                                                    target="_blank">(共计{{movieApi.photos_count?movieApi.photos_count:"..."}}张)</a></span>
-                            </h2>
-                            <ul class="related-pic-bd wide_videos">
-                                <li v-for="(item,index) in movieApi.photos">
-                                    <a :href="item.alt" target="_blank">
-                                        <img :src="item.cover | getSmallPhoto" alt="图片" rel="noreferrer"
-                                             style="padding: 8px;box-sizing: border-box">
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div id="comments-section">
-                            <div class="mod-hd">
+
+                            <div id="celebrities" class="celebrities related-celebrities">
                                 <h2>
-                                    <i class>热门短评......</i>
-                                    <span class="pl">
-                  <a :href="url_douban+'/subject/'+movieBase.movieId+'/comments'"
-                     target="_blank">(共计{{movieApi.comments_count?movieApi.comments_count:"..."}}条)</a>
-                </span>
+                                    <i class>演职员列表......</i>
+                                    <span class="pl"><el-tooltip content="跳转到豆瓣电影" placement="top"><a
+                                            :href="'/subject/'+movieBase.movieId+'/celebrities'"
+                                            target="_blank">
+                                    (共计{{movieBase.directors.length+movieBase.writers.length + movieBase.leadingactors.length}}人)</a></el-tooltip></span>
                                 </h2>
+                                <ul class="celebrities-list from-subject __oneline">
+                                    <li class="celebrity" v-for="item in movieApi.directors">
+                                        <a :href="'/celebrity/'+item.id" target="_blank" class="">
+                                            <div class="avatar">
+                                                <img :src="item.avatars.large" v-if="item.avatars" rel="noreferrer">
+                                            </div>
+                                        </a>
+                                        <a :href="'/celebrity/'+item.id" target="_blank" class="">
+                                            <div class="info">
+                                                <span class="name">{{item.name}}</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="celebrity" v-for="item in movieApi.writers">
+                                        <a :href="'/celebrity/'+item.id" target="_blank" class="">
+                                            <div class="avatar">
+                                                <img :src="item.avatars.large" v-if="item.avatars" rel="noreferrer">
+                                            </div>
+                                        </a>
+                                        <a :href="'/celebrity/'+item.id" target="_blank" class="">
+                                            <div class="info">
+                                                <span class="name">{{item.name}}</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="celebrity" v-for="(item,index) in movieApi.casts" v-if="index < 3">
+                                        <a :href="'/celebrity/'+item.id" target="_blank" class="">
+                                            <div class="avatar">
+                                                <img :src="item.avatars.large" v-if="item.avatars" rel="noreferrer">
+                                            </div>
+                                        </a>
+                                        <a :href="'/celebrity/'+item.id" target="_blank" class="">
+                                            <div class="info">
+                                                <span class="name">{{item.name}}</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
                             </div>
-                            <div class="mod-bd">
-                                <div class="tab-bd">
-                                    <div id="hot-comments" class="tab">
-                                        <div class="comment-item" v-for=" (item,index) in movieApi.popular_comments"
-                                             v-if="index < 5">
-                                            <div class="comment">
-                                                <h3>
-                            <span class="comment-vote">
-                              <span class="votes">{{item.useful_count}} 有用</span>
-                            </span>
-                                                    <span class="comment-info">
+
+                            <div id="related-pic" class="related-pic">
+                                <h2>
+                                    <i class>图片列表......</i>
+                                    <span class="pl"><el-tooltip content="跳转到豆瓣电影" placement="top"><a
+                                            :href="'/subject/'+movieBase.movieId+'/all_photos'"
+                                            target="_blank">(共计{{movieApi.photos_count?movieApi.photos_count:"..."}}张)</a></el-tooltip></span>
+                                </h2>
+                                <ul class="related-pic-bd wide_videos">
+                                    <li v-for="(item,index) in movieApi.photos">
+                                        <a :href="item.alt" target="_blank">
+                                            <img :src="item.cover | getSmallPhoto" alt="图片" rel="noreferrer"
+                                                 style="padding: 8px;box-sizing: border-box">
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div id="comments-section">
+                                <div class="mod-hd">
+                                    <h2>
+                                        <i class>热门短评......</i>
+                                        <span class="pl">
+                <el-tooltip content="跳转到豆瓣电影" placement="top">  <a
+                        :href="url_douban+'/subject/'+movieBase.movieId+'/comments'"
+                        target="_blank">(共计{{movieApi.comments_count?movieApi.comments_count:"..."}}条)</a></el-tooltip>
+                </span>
+                                    </h2>
+                                </div>
+                                <el-carousel :interval="3000" type="card" height="200px">
+                                    <el-carousel-item v-for="(item,index) in movieApi.popular_comments" :key="index">
+                                        <div>
+                                            <h3 style="background-color:#11AEBF">
+                                                <i class="el-icon-caret-right"></i>
+                                                <span>
                             <a :href="url_douban+'/people/'+item.author.id" target="_blank" class="">{{item.author.name}}</a>
                             <span :class="getRateType(item.rating.value)+' rating'"></span>
-                            <span class="comment-time">{{item.created_at}}</span>
+                              <span>✿ {{item.useful_count}} </span>
+                                                <br>
+                            <span style="font-size: 12px">{{item.created_at}}</span>
                           </span>
-                                                </h3>
-                                                <p class="">
-                                                    <span class="short">{{item.content}}</span>
-                                                </p>
-                                            </div>
+                                            </h3>
+                                            <p class="">
+                                                <span class="short">{{item.content}}</span>
+                                            </p>
                                         </div>
-                                    </div>
-                                </div>
+                                    </el-carousel-item>
+                                </el-carousel>
                             </div>
-                        </div>
-                        <section class="reviews mod movie-content">
-                            <header>
-                                <h2>
-                                    <i class>热门影评......</i>
-                                    <span class="pl">
-                                    <a :href="url_douban+'/subject/'+movieBase.movieId+'/reviews'" target="_blank">
-                    (共计{{movieApi.reviews_count?movieApi.reviews_count:"..."}}条)
-                                    </a>
-                  </span>
-                                </h2>
-                            </header>
-                            <div class="review-list">
-                                <div v-for="(item,index) in movieApi.popular_reviews" v-if="index < 5"
-                                     class="main review-item">
-                                    <header class="main-hd">
-                                        <a :href="url_douban+'/people/'+item.author.id" class="avator">
-                                            <img width="24" height="24" :src="item.author.avatar">
-                                        </a>
-                                        <a :href="url_douban+'/people/'+item.author.id" class="name"
-                                           target="_blank">{{item.author.name}}</a>
-                                        <span :class="getRateType(item.rating.value)+' main-title-rating'"></span>
-                                        <!--影评时间-->
-                                        <span class="main-meta"></span>
-                                    </header>
-                                    <div class="main-bd">
-                                        <h2>
-                                            <a :href="item.alt" target="_blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{item.title}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                        </h2>
-                                        <div class="review-short">
-                                            {{item.summary}}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                        <!--网易云音乐-->
-                        <div id="all-songs" v-for="item in neteaseSongs" v-if="item.data.hotComments.length !== 0">
-                            <div id="songs-section">
-                                <div class="mod-hd">
-                                    <h2>
-                                        <i class>网易云音乐单曲 <span style="color:#79078f">< {{item.name}} ></span> 热门评论......<a
-                                                :href="url_netease+'/song?id='+item.id"
-                                                target="_blank"><i style="font-size:13px;">查看更多</i></a></i>
-                                        <span class="pl">
-                </span>
-                                    </h2>
-                                </div>
-                                <div class="mod-bd">
-                                    <div class="tab-bd">
-                                        <div id="song-hot-comments" class="tab">
-                                            <div class="comment-item"
-                                                 v-for=" (itemOfSong,index) in item.data.hotComments" v-if="index < 5">
-                                                <div class="comment">
-                                                    <h3>
-                            <span class="comment-vote">
-                              <span class="votes">{{itemOfSong.likedCount}} 喜欢</span>
-                            </span>
-                                                        <span class="comment-info">
-                              <a :href="url_netease+'/user/home?id='+itemOfSong.user.userId" target="_blank" class=""> {{itemOfSong.user.nickname}} </a>
-                            <span class="comment-time" style="font-size: 11px;"> &nbsp;&nbsp; 创建于 {{itemOfSong.time | formatDate()}}</span>
-                          </span>
-                                                    </h3>
-                                                    <p class="">
-                                                        <span class="short">{{itemOfSong.content}}</span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="all-albums" v-for="item in neteaseAlbums" v-if="item.data.hotComments.length !== 0">
-                            <div id="albums-section">
-                                <div class="mod-hd">
-                                    <h2>
-                                        <i class>网易云音乐专辑 <span style="color:#79078f">< {{item.name}} ></span> 热门评论......<a
-                                                :href="url_netease+'/album?id='+item.id"
-                                                target="_blank"><i style="font-size:13px;">查看更多</i></a>
-                                        </i>
-                                        <span class="pl">
-                </span>
-                                    </h2>
-                                </div>
-                                <div class="mod-bd">
-                                    <div class="tab-bd">
-                                        <div id="album-hot-comments" class="tab">
-                                            <div class="comment-item"
-                                                 v-for=" (itemOfAlbum,index) in item.data.hotComments" v-if="index < 5">
-                                                <div class="comment">
-                                                    <h3>
-                            <span class="comment-vote">
-                              <span class="votes">{{itemOfAlbum.likedCount}} 喜欢</span>
-                            </span>
-                                                        <span class="comment-info">
-                              <a :href="url_netease+'/user/home?id='+itemOfAlbum.user.userId" target="_blank" class=""> {{itemOfAlbum.user.nickname}} </a>
-                            <span class="comment-time" style="font-size: 11px;"> &nbsp;&nbsp; 创建于 {{itemOfAlbum.time | formatDate()}}</span>
-                          </span>
-                                                    </h3>
-                                                    <p class="">
-                                                        <span class="short">{{itemOfAlbum.content}}</span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="all-playlists" v-for="item in neteasePlaylists"
-                             v-if="item.data.hotComments.length !== 0">
-                            <div id="playlists-section">
-                                <div class="mod-hd">
-                                    <h2>
-                                        <i class>网易云音乐歌单 <span style="color:#79078f">< {{item.name}} ></span> 热门评论......<a
-                                                :href="url_netease+'/playlist?id='+item.id"
-                                                target="_blank"><i style="font-size:13px;">查看更多</i></a></i>
-                                        <span class="pl">
-                </span>
-                                    </h2>
-                                </div>
-                                <div class="mod-bd">
-                                    <div class="tab-bd">
-                                        <div id="playlist-hot-comments" class="tab">
-                                            <div class="comment-item"
-                                                 v-for=" (itemOfPlaylist,index) in item.data.hotComments"
-                                                 v-if="index < 5">
-                                                <div class="comment">
-                                                    <h3>
-                            <span class="comment-vote">
-                              <span class="votes">{{itemOfPlaylist.likedCount}} 喜欢</span>
-                            </span>
-                                                        <span class="comment-info">
-                              <a :href="url_netease+'/user/home?id='+itemOfPlaylist.user.userId" target="_blank"
-                                 class=""> {{itemOfPlaylist.user.nickname}} </a>
-                            <span class="comment-time" style="font-size: 11px;"> &nbsp;&nbsp; 创建于 {{itemOfPlaylist.time | formatDate()}}</span>
-                          </span>
-                                                    </h3>
-                                                    <p class="">
-                                                        <span class="short">{{itemOfPlaylist.content}}</span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
-                        <!--书籍评论-->
-                        <div id="book-comments-section"
-                             v-if="bookComments && bookComments.comments && bookComments.comments.length!=0">
-                            <div class="mod-hd">
-                                <h2>
-                                    <i class>原著相关 <span style="color:#79078f"><a
-                                            :href="url_douban_book+'/subject/'+bookComments.bookId"
-                                            target="_blank">< {{bookComments.bookName}} ></a></span> 热门短评......</i>
-                                    <span class="pl">
-                  <a :href="url_douban_book+'/subject/'+bookComments.bookId+'/comments'"
-                     target="_blank">(共计{{bookComments.total?bookComments.total:"..."}}条)</a>
-                </span>
-                                </h2>
-                            </div>
-                            <div class="mod-bd">
-                                <div class="tab-bd">
-                                    <div id="book-hot-comments" class="tab">
-                                        <div class="comment-item" v-for=" (item,index) in bookComments.comments"
-                                             v-if="index < 5">
-                                            <div class="comment">
-                                                <h3>
-                            <span class="comment-vote">
-                              <span class="votes">{{item.votes}} 有用</span>
-                            </span>
-                                                    <span class="comment-info">
-                            <a :href="url_douban_book+'/people/'+item.author.id" target="_blank" class="">{{item.author.name}}</a>
-                            <span v-if="item.rating && item.rating.value"
-                                  :class="getRateType(item.rating.value)+' rating'"></span>
-                            <span class="comment-time">{{item.published}}</span>
-                          </span>
-                                                </h3>
-                                                <p class="">
-                                                    <span class="short">{{item.summary}}</span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="book-reviews-section"
-                             v-if="bookReviews && bookReviews.reviews && bookReviews.reviews.length!=0">
                             <section class="reviews mod movie-content">
                                 <header>
                                     <h2>
-                                        <i class>原著相关 <span style="color:#79078f"><a
-                                                :href="url_douban_book+'/subject/'+bookReviews.bookId"
-                                                target="_blank">< {{bookReviews.bookName}} ></a></span> 热门书评......</i>
+                                        <i class>热门影评......</i>
                                         <span class="pl">
-                                    <a :href="url_douban+'/subject/'+movieBase.movieId+'/reviews'" target="_blank">
-                    (共计{{bookReviews.total?bookReviews.total:"..."}}条)
-                                    </a>
+                                   <el-tooltip content="跳转到豆瓣电影" placement="top"> <a
+                                           :href="url_douban+'/subject/'+movieBase.movieId+'/reviews'" target="_blank">
+                    (共计{{movieApi.reviews_count?movieApi.reviews_count:"..."}}条)
+                                   </a></el-tooltip>
                   </span>
                                     </h2>
                                 </header>
-                                <div class="review-list">
-                                    <div v-for="(item,index) in bookReviews.reviews"
-                                         v-if="index < 5 && item.summary && item.summary.toString().charAt(0)!='{'"
-                                         class="main review-item">
-                                        <header class="main-hd">
-                                            <a :href="url_douban_book+'/people/'+item.author.id" class="avator">
-                                                <img width="24" height="24" :src="item.author.avatar">
-                                            </a>
-                                            <a :href="url_douban_book+'/people/'+item.author.id" class="name"
-                                               target="_blank">{{item.author.name}}</a>
-                                            <span v-if="item.rating && item.rating.value"
-                                                  :class="getRateType(item.rating.value)+' main-title-rating'"></span>
-                                            <!--影评时间-->
-                                            <span class="main-meta">
-                      <span class="comment-time">{{item.updated}}</span>
-                    </span>
-                                        </header>
+                                <el-carousel :interval="3000" type="card" height="250px">
+                                    <el-carousel-item class="main review-item"
+                                                      v-for="(item,index) in movieApi.popular_reviews" :key="index">
+
                                         <div class="main-bd">
-                                            <h2>
-                                                <a :href="item.alt" target="_blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{item.title}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                            </h2>
+                                            <h3 style="background-color: #A0BF30 ">
+                                                <header class="main-hd">
+                                                    <a :href="url_douban+'/people/'+item.author.id" class="avator">
+                                                        <img width="24" height="24" :src="item.author.avatar">
+                                                    </a>
+                                                    <a :href="url_douban+'/people/'+item.author.id" class="name"
+                                                       target="_blank">{{item.author.name}}</a>
+                                                    <span :class="getRateType(item.rating.value)+' main-title-rating'"></span>
+                                                </header>
+                                                <el-tooltip content="跳转到豆瓣影评" placement="top">
+                                                    <a :href="item.alt" target="_blank">{{item.title}}</a></el-tooltip>
+                                            </h3>
                                             <div class="review-short">
                                                 {{item.summary}}
                                             </div>
                                         </div>
+                                    </el-carousel-item>
+                                </el-carousel>
+                            </section>
+
+                            <!--网易云音乐-->
+
+                            <div id="all-songs" v-for="item in neteaseSongs" v-if="item.data.hotComments.length !== 0">
+                                <div id="songs-section">
+                                    <div class="mod-hd">
+                                        <h2>
+                                            <i class>网易云音乐单曲 <span style="color:#79078f">< {{item.name}} ></span>
+                                                热门评论......
+                                                <el-tooltip content="跳转到网易云音乐" placement="top"><a
+                                                        :href="url_netease+'/song?id='+item.id"
+                                                        target="_blank"><i style="font-size:13px;">查看更多</i></a>
+                                                </el-tooltip>
+                                            </i>
+                                            <span class="pl">
+                </span>
+                                        </h2>
+                                    </div>
+                                    <div class="mod-bd">
+                                        <div class="tab-bd">
+                                            <div id="song-hot-comments" class="tab">
+                                                <el-carousel :interval="3000" type="card" height="200px">
+                                                    <el-carousel-item
+                                                            v-for="(itemOfSong,index) in item.data.hotComments"
+                                                            :key="index">
+                                                        <div class="comment">
+                                                            <h3 style="background-color: #209754">
+
+                                                            <span class="comment-info">
+                              <a :href="url_netease+'/user/home?id='+itemOfSong.user.userId" target="_blank" class=""> {{itemOfSong.user.nickname}} </a>
+                                                       <span class="comment-vote">
+                              <span class="votes">✿ {{itemOfSong.likedCount}}</span>
+                            </span><br>
+                            <span class="comment-time"
+                                  style="font-size: 12px;"> {{itemOfSong.time | formatDate()}}</span>
+                          </span>
+                                                            </h3>
+                                                            <p class="">
+                                                                <span class="short">{{itemOfSong.content}}</span>
+                                                            </p>
+                                                        </div>
+                                                    </el-carousel-item>
+                                                </el-carousel>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </section>
-                        </div>
-                        <br>
-                    </div>
-                    <div class="aside" style="position: absolute; margin-left: 690px;">
-                        <!--mp3-->
-                        <div id="musicAbout" v-if="isMusicAllOk && neteaseMusic && neteaseMusic.length!=0 "
-                             style="margin-bottom: 20px">
-                            <h2>
-                                <i>配乐 / 相关 <a style="color:#79078f"
-                                              :href="url_netease+'/#/search/m/?s='+neteaseSearchKeyword"
-                                              target="_blank">< {{neteaseSearchKeyword}} > </a></i>
-                            </h2>
-                            <aplayer
-                                    :music="neteaseMusic[0]"
-                                    :list="neteaseMusic"
-                                    :showLrc="showLrc"
-                                    repeat="repeat-all"
-                            >
-                            </aplayer>
-                        </div>
-                        <div id="musicPlaylist"
-                             v-if="isMusicAllOk && neteasePlaylistSongs && neteasePlaylistSongs.length!=0 "
-                             style="margin-bottom: 20px">
-                            <h2>
-                                <i>歌单 / 相关 <a style="color:#79078f"
-                                              :href="url_netease+'/#/playlist?id='+neteasePlaylistSongsId"
-                                              target="_blank">< {{neteasePlaylistSongsName}} > </a></i>
-                            </h2>
-                            <aplayer
-                                    autoplay
-                                    :music="neteasePlaylistSongs[0]"
-                                    :list="neteasePlaylistSongs"
-                                    :showLrc="showLrc"
-                                    :repeat="'repeat-all'"
-                            >
-                            </aplayer>
-                        </div>
-                        <div id="musicAlbum" v-if="isMusicAllOk && neteaseAlbumSongs && neteaseAlbumSongs.length!=0"
-                             style="margin-bottom: 20px">
-                            <h2>
-                                <i>专辑 / 相关 <a style="color:#79078f"
-                                              :href="url_netease+'/#/album?id='+neteaseAlbumSongsId"
-                                              target="_blank">< {{neteaseAlbumSongsName}} > </a></i>
-                            </h2>
-                            <aplayer
-                                    :music="neteaseAlbumSongs[0]"
-                                    :list="neteaseAlbumSongs"
-                                    :showLrc="showLrc"
-                                    :repeat="'repeat-all'"
-                            >
-                            </aplayer>
-                        </div>
-                        <!--原著信息-->
-                        <div :id="'book_'+index" v-if="bookSearch.books && bookSearch.count!=0"
-                             style="margin-top: 10px;margin-bottom: 20px;"
-                             v-for="(book,index) in bookSearch.books">
-                            <h2>
-                                <i class="">原著 / 相关 <a style="color:#79078f" :href="book.alt" target="_blank"><
-                                    {{book.title}}
-                                    > </a><span
-                                        v-if="book.rating && book.rating.average && book.rating.average!='0.0'"
-                                        style="color: #f7097a">{{book.rating.average}}</span></i>
-                            </h2>
-                            <div
-                                    style="box-shadow: 2px 3px 6px 0 rgba(0,0,0,0.2);transition: 0.3s;width: 100%;border-radius: 3px;min-height: 120px;margin-left: 5px;">
-                                <div class="mainpicforbook">
-                                    <a class="nbgnbg" :href="book.alt">
-                                        <img
-                                                :src="book.images.large" rel="noreferrer" style="max-height: 95px"></a>
-                                    <p class="gact"></p>
+                            </div>
+
+                            <div id="all-albums" v-for="item in neteaseAlbums"
+                                 v-if="item.data.hotComments.length !== 0">
+                                <div id="albums-section">
+                                    <div class="mod-hd">
+                                        <h2>
+                                            <i class>网易云音乐专辑 <span style="color:#79078f">< {{item.name}} ></span>
+                                                热门评论......
+                                                <el-tooltip content="跳转到网易云音乐" placement="top"><a
+                                                        :href="url_netease+'/album?id='+item.id"
+                                                        target="_blank"><i style="font-size:13px;">查看更多</i></a>
+                                                </el-tooltip>
+                                            </i>
+                                            <span class="pl">
+                </span>
+                                        </h2>
+                                    </div>
+                                    <div class="mod-bd">
+                                        <div class="tab-bd">
+                                            <div id="album-hot-comments" class="tab">
+                                                <el-carousel :interval="3000" type="card" height="200px">
+                                                    <el-carousel-item
+                                                            v-for=" (itemOfAlbum,index) in item.data.hotComments"
+                                                            :key="index">
+                                                        <div class="comment">
+                                                            <h3 style="background-color:#F2A2D9">
+                            <span class="comment-vote">
+
+                            </span>
+                                                                <span class="comment-info">
+                              <a :href="url_netease+'/user/home?id='+itemOfAlbum.user.userId" target="_blank" class=""> {{itemOfAlbum.user.nickname}} </a>
+                                                                <span class="votes">✿ {{itemOfAlbum.likedCount}}</span><br>
+                            <span class="comment-time"
+                                  style="font-size: 12px;">  {{itemOfAlbum.time | formatDate()}}</span>
+                          </span>
+                                                            </h3>
+                                                            <p class="">
+                                                                <span class="short">{{itemOfAlbum.content}}</span>
+                                                            </p>
+                                                        </div>
+                                                    </el-carousel-item>
+                                                </el-carousel>
+
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div style="line-height: 16px;">
+                            </div>
+
+                            <div id="all-playlists" v-for="item in neteasePlaylists"
+                                 v-if="item.data.hotComments.length !== 0">
+                                <div id="playlists-section">
+                                    <div class="mod-hd">
+                                        <h2>
+                                            <i class>网易云音乐歌单 <span style="color:#79078f">< {{item.name}} ></span>
+                                                热门评论......
+                                                <el-tooltip content="跳转到网易云音乐" placement="top"><a
+                                                        :href="url_netease+'/playlist?id='+item.id"
+                                                        target="_blank"><i style="font-size:13px;">查看更多</i></a>
+                                                </el-tooltip>
+                                            </i>
+                                            <span class="pl">
+                </span>
+                                        </h2>
+                                    </div>
+                                    <div class="mod-bd">
+                                        <div class="tab-bd">
+                                            <div id="playlist-hot-comments" class="tab">
+                                                <el-carousel :interval="3000" type="card" height="200px">
+                                                    <el-carousel-item
+                                                            v-for=" (itemOfPlaylist,index) in item.data.hotComments"
+                                                            :key="index">
+                                                        <div class="comment">
+                                                            <h3 style="background-color: #F0C419 ">
+                            <span class="comment-vote">
+
+                            </span>
+                                                                <span class="comment-info">
+                              <a :href="url_netease+'/user/home?id='+itemOfPlaylist.user.userId" target="_blank"
+                                 class=""> {{itemOfPlaylist.user.nickname}} </a>
+                                                                                              <span class="votes">✿ {{itemOfPlaylist.likedCount}}</span><br>
+                            <span class="comment-time"
+                                  style="font-size: 12px;"> {{itemOfPlaylist.time | formatDate()}}</span>
+                          </span>
+                                                            </h3>
+                                                            <p class="">
+                                                                <span class="short">{{itemOfPlaylist.content}}</span>
+                                                            </p>
+                                                        </div>
+                                                    </el-carousel-item>
+                                                </el-carousel>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--书籍评论-->
+                            <div id="book-comments-section"
+                                 v-if="bookComments && bookComments.comments && bookComments.comments.length!=0">
+                                <div class="mod-hd">
+                                    <h2>
+                                        <i class>原著相关 <span style="color:#79078f"><a
+                                                :href="url_douban_book+'/subject/'+bookComments.bookId"
+                                                target="_blank">< {{bookComments.bookName}} ></a></span> 热门短评......</i>
+                                        <span class="pl">
+                 <el-tooltip content="跳转到豆瓣读书" placement="top"> <a
+                         :href="url_douban_book+'/subject/'+bookComments.bookId+'/comments'"
+                         target="_blank">(共计{{bookComments.total?bookComments.total:"..."}}条)</a></el-tooltip>
+                </span>
+                                    </h2>
+                                </div>
+                                <div class="mod-bd">
+                                    <div class="tab-bd">
+                                        <div id="book-hot-comments" class="tab">
+                                            <el-carousel :interval="3000" type="card" height="200px">
+                                                <el-carousel-item v-for=" (item,index) in bookComments.comments"
+                                                                  :key="index">
+                                                    <div class="comment">
+                                                        <h3 style="background-color: #955BA5">
+                                                    <span class="comment-info">
+                            <a :href="url_douban_book+'/people/'+item.author.id" target="_blank" class="">{{item.author.name}}</a>
+                            <span v-if="item.rating && item.rating.value"
+                                  :class="getRateType(item.rating.value)+' rating'"></span>
+                          </span>
+                                                            <span class="votes">✿ {{item.votes}} </span>
+                                                            <br>
+                                                            <span class="comment-time" style="font-size: 12px">{{item.published}}</span>
+                                                        </h3>
+                                                        <p class="">
+                                                            <span class="short">{{item.summary}}</span>
+                                                        </p>
+                                                    </div>
+                                                </el-carousel-item>
+                                            </el-carousel>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="book-reviews-section"
+                                 v-if="bookReviews && bookReviews.reviews && bookReviews.reviews.length!=0">
+                                <section class="reviews mod movie-content">
+                                    <header>
+                                        <h2>
+                                            <i class>原著相关 <span style="color:#79078f"><a
+                                                    :href="url_douban_book+'/subject/'+bookReviews.bookId"
+                                                    target="_blank">< {{bookReviews.bookName}} ></a></span>
+                                                热门书评......</i>
+                                            <span class="pl">
+                                    <el-tooltip content="跳转到豆瓣读书" placement="top"><a
+                                            :href="url_douban+'/subject/'+movieBase.movieId+'/reviews'" target="_blank">
+                    (共计{{bookReviews.total?bookReviews.total:"..."}}条)
+                                    </a></el-tooltip>
+                  </span>
+                                        </h2>
+                                    </header>
+                                    <div class="review-list">
+                                        <el-carousel :interval="3000" type="card" height="200px">
+                                            <el-carousel-item v-for="(item,index) in bookReviews.reviews"
+                                                              v-if="item.summary && item.summary.toString().charAt(0)!='{'"
+                                                              :key="index">
+
+                                                <div class="main-bd">
+                                                    <h3 style="background-color: #2EECF3">
+                                                        <header class="main-hd">
+                                                            <a :href="url_douban_book+'/people/'+item.author.id"
+                                                               class="avator">
+                                                                <img width="24" height="24" :src="item.author.avatar">
+                                                            </a>
+                                                            <a :href="url_douban_book+'/people/'+item.author.id"
+                                                               class="name"
+                                                               target="_blank">{{item.author.name}}</a>
+                                                            <span v-if="item.rating && item.rating.value"
+                                                                  :class="getRateType(item.rating.value)+' main-title-rating'"></span>
+                                                            <!--影评时间-->
+                                                            <span class="main-meta">
+                      <span style="font-size: 12px">{{item.updated}}</span>
+                    </span>
+                                                        </header>
+                                                        <a :href="item.alt" target="_blank">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{item.title}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                                    </h3>
+                                                    <div class="review-short">
+                                                        {{item.summary}}
+                                                    </div>
+                                                </div>
+                                            </el-carousel-item>
+                                        </el-carousel>
+                                    </div>
+                                </section>
+                            </div>
+
+                            <br>
+                        </div>
+                        <div class="aside" style="position: absolute; margin-left: 690px;">
+                            <!--mp3-->
+                            <div id="musicAbout" v-if="isMusicAllOk && neteaseMusic && neteaseMusic.length!=0 "
+                                 style="margin-bottom: 20px">
+                                <h2>
+                                    <i>配乐 / 相关
+                                        <el-tooltip content="跳转到网易云音乐" placement="top">
+                                            <a style="color:#79078f"
+                                               :href="url_netease+'/#/search/m/?s='+neteaseSearchKeyword"
+                                               target="_blank">< {{neteaseSearchKeyword}} > </a></el-tooltip>
+                                    </i>
+                                </h2>
+                                <aplayer
+                                        :music="neteaseMusic[0]"
+                                        :list="neteaseMusic"
+                                        :showLrc="showLrc"
+                                        repeat="repeat-all"
+                                >
+                                </aplayer>
+                            </div>
+                            <div id="musicPlaylist"
+                                 v-if="isMusicAllOk && neteasePlaylistSongs && neteasePlaylistSongs.length!=0 "
+                                 style="margin-bottom: 20px">
+                                <h2>
+                                    <i>歌单 / 相关
+                                        <el-tooltip content="跳转到网易云音乐" placement="top"><a style="color:#79078f"
+                                                                                          :href="url_netease+'/#/playlist?id='+neteasePlaylistSongsId"
+                                                                                          target="_blank"><
+                                            {{neteasePlaylistSongsName}} > </a></el-tooltip>
+                                    </i>
+                                </h2>
+                                <aplayer
+                                        autoplay
+                                        :music="neteasePlaylistSongs[0]"
+                                        :list="neteasePlaylistSongs"
+                                        :showLrc="showLrc"
+                                        :repeat="'repeat-all'"
+                                >
+                                </aplayer>
+                            </div>
+                            <div id="musicAlbum" v-if="isMusicAllOk && neteaseAlbumSongs && neteaseAlbumSongs.length!=0"
+                                 style="margin-bottom: 20px">
+                                <h2>
+                                    <i>专辑 / 相关
+                                        <el-tooltip content="跳转到网易云音乐" placement="top"><a style="color:#79078f"
+                                                                                          :href="url_netease+'/#/album?id='+neteaseAlbumSongsId"
+                                                                                          target="_blank"><
+                                            {{neteaseAlbumSongsName}} > </a></el-tooltip>
+                                    </i>
+                                </h2>
+                                <aplayer
+                                        :music="neteaseAlbumSongs[0]"
+                                        :list="neteaseAlbumSongs"
+                                        :showLrc="showLrc"
+                                        :repeat="'repeat-all'"
+                                >
+                                </aplayer>
+                            </div>
+                            <!--原著信息-->
+                            <div :id="'book_'+index" v-if="bookSearch.books && bookSearch.count!=0"
+                                 style="margin-top: 10px;margin-bottom: 20px;"
+                                 v-for="(book,index) in bookSearch.books">
+                                <h2>
+                                    <i class="">原著 / 相关 <a style="color:#79078f" :href="book.alt" target="_blank"><
+                                        {{book.title}}
+                                        > </a><span
+                                            v-if="book.rating && book.rating.average && book.rating.average!='0.0'"
+                                            style="color: #f7097a">{{book.rating.average}}</span></i>
+                                </h2>
+                                <div
+                                        style="box-shadow: 2px 3px 6px 0 rgba(0,0,0,0.2);transition: 0.3s;width: 100%;border-radius: 3px;min-height: 120px;margin-left: 5px;">
+                                    <div class="mainpicforbook">
+                                        <a class="nbgnbg" :href="book.alt">
+                                            <img
+                                                    :src="book.images.large" rel="noreferrer" style="max-height: 95px"></a>
+                                        <p class="gact"></p>
+                                    </div>
+                                    <div style="line-height: 16px;">
                 <span v-if="book.origin_title">
                 <span class="pl">原名: </span>
                 <span class="attrs">{{book.origin_title}}</span><br>
                 </span>
-                                    <span v-if="book.author && book.author.length!=0">
+                                        <span v-if="book.author && book.author.length!=0">
                 <span class="pl">作者: </span>
                 <span class="attrs" v-for="(item,index) in book.author">{{item}}{{ index === book.author.length-1 ? "" : " / " }}</span><br>
                 </span>
-                                    <span v-if="book.translator && book.translator.length!=0">
+                                        <span v-if="book.translator && book.translator.length!=0">
                 <span class="pl">译者: </span>
                 <span class="attrs" v-for="(item,index) in book.translator">{{item}}{{ index === book.translator.length-1 ? "" : " / " }}</span><br>
                 </span>
-                                    <span v-if="book.publisher">
+                                        <span v-if="book.publisher">
                 <span class="pl">出版社: </span>
                 <span class="attrs">{{book.publisher}}</span><br>
                 </span>
-                                    <span v-if="book.pages">
+                                        <span v-if="book.pages">
                 <span class="pl">页数: </span>
                 <span class="attrs">{{book.pages}}</span><br>
                 </span>
-                                    <span v-if="book.isbn13">
-                <span class="pl">ISBN: </span>
-                <span class="attrs">{{book.isbn13}}</span><br>
-                </span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="mit"
-                             v-show="(resourceSearch && resourceSearch.length!=0)"
-                             style="margin-top: 10px;margin-bottom: 20px;">
-                            <h2>
-                                <i class="" style="color:#f7097a">严正声明 </i>
-                            </h2>
-                            <div
-                                    style="box-shadow: 2px 3px 6px 0 rgba(0,0,0,0.2);transition: 0.3s;width: 100%;border-radius: 3px;min-height: 120px;margin-left: 5px;">
-                                        <span style="font-size: 13px">
-                                        本站为开源项目,遵守<b style="color: red">MIT</b>开源协议<br>
-                                        本站以下链接均为<b style="color:red">友情链接</b>,解释权非本站所有<br>
-
-                                        友情链接提供原则:<br>
-                                          &nbsp;&nbsp;1. 仅供学习交流,不做任何商业用途<br>
-                                          &nbsp;&nbsp;2. 仅收录经典冷门影视作品<br>
-                                          &nbsp;&nbsp;3. 拒绝收录近期上映的电影<br>
-
-                                        若发现任何上述违规现象,请<a
-                                                :href="'mailto:'+url_email+'?subject='+movieBase.name+'('+movieBase.movieId+')侵犯版权'">联系站长</a>.将立即删除!<br>
-                                        </span>
-                            </div>
-                        </div>
-                        <!--                                            资源列表信息-->
-                        <div id="resourceSearch"
-                             v-show="resourceSearch && resourceSearch.length!=0 && resourceResult && resourceResult.length==0">
-                            <div
-                                    style="box-shadow: 3px 5px 10px 0 rgba(192,192,192,0.2);transition: 0.3s;width: 100%;border-radius: 3px;margin-left: 5px;">
-                                <i class="">资源目录 <span style="color:#79078f">< {{resourceSearchKeyword}} > </span></i>
-                                <div v-for="item in resourceSearch" class="resourceName">
-                                    <span style="font-size: 13px" v-if="item.movieName">{{item.movieName}}</span>
+                                    </div>
                                 </div>
                             </div>
                             <!--                        点击资源-->
-                            <button @click="getResource(resourceSearchKeyword,1,2)">
-                                获取资源
-                            </button>
-                        </div>
+                            <div style="border-bottom: 10px" v-if="isResourceSearch||isResourceResult">
+                                <el-button type="primary" @click="getResource(resourceSearchKeyword,0,2,3)">
+                                    更多目录
+                                </el-button>
+                                <el-button type="primary" @click="getResource(resourceSearchKeyword,1,2,-1)">
+                                    目录资源
+                                </el-button>
+                            </div>
+                            <!--                                            资源列表信息-->
+                            <div id="resourceSearch" v-if="isResourceSearch">
+                                <div
+                                        style="box-shadow: 3px 5px 10px 0 rgba(192,192,192,0.2);transition: 0.3s;width: 100%;border-radius: 3px;margin-left: 5px;">
+                                    <vue-loading v-show="resourceSearch && resourceSearch.length==0"
+                                                 type="bars" color="#d9544e"
+                                                 :size="{ width: '50px', height: '50px' }"></vue-loading>
+                                    <div v-show="resourceSearch && resourceSearch.length!=0">
+                                        <h2>
+                                            <i class="">资源目录 <span
+                                                    style="color:#79078f">< {{resourceSearchKeyword}} > </span></i>
+                                        </h2>
+                                        <div v-for="item in resourceSearch" class="resourceName">
+                                            <span style="color:#047CCC;font-size: 13px" v-if="item.movieName">{{item.movieName}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                        <!--资源信息-->
+                            <!--资源信息-->
 
-                        <div id="resourchResult" v-show="resourceResult && resourceResult.length!=0"
-                             style="margin-top: 10px;margin-bottom: 20px;">
-                            <h2>
-                                <i class="">资源内容 <span style="color:#79078f">< {{resourceSearchKeyword}} > </span></i>
-                            </h2>
-                            <div
-                                    style="box-shadow: 3px 5px 10px 0 rgba(192,192,192,0.2);transition: 0.3s;width: 100%;border-radius: 3px;margin-left: 5px;">
-                                <div v-for="type in resourceTypeList" v-if="type.list.length!=0">
-                                    <h3 class="resourceTitle"><i>{{type.type}}</i></h3>
-                                    <div v-for="res in type.list"
-                                         class="resourceName">
+                            <div id="resourchResult" v-if="isResourceResult"
+                                 style="margin-top: 10px;margin-bottom: 20px;">
+                                <vue-loading v-show="resourceResult && resourceResult.length==0"
+                                             type="bars" color="#d9544e"
+                                             :size="{ width: '50px', height: '50px' }"></vue-loading>
+                                <div v-show="resourceResult && resourceResult.length!=0">
+                                    <h2>
+                                        <i class="">资源内容 <span
+                                                style="color:#79078f">< {{resourceSearchKeyword}} > </span></i>
+                                    </h2>
+                                    <div
+                                            style="box-shadow: 3px 5px 10px 0 rgba(192,192,192,0.2);transition: 0.3s;width: 100%;border-radius: 3px;margin-left: 5px;">
+                                        <div v-for="type in resourceTypeList" v-if="type.list.length!=0">
+                                            <h3 class="resourceTitle"><i>{{type.type}}</i></h3>
+                                            <div v-for="res in type.list"
+                                                 class="resourceName">
                                     <span>
                   <a :href="res.resourceUrl" style="font-size: 13px">{{res.resourceName==""?res.resourceUrl:res.resourceName}}</a><br>
                 </span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -698,10 +767,10 @@
                 </div>
             </div>
         </div>
-    </div>
 </template>
 <script>
     import axios from 'axios'
+    import {VueLoading} from 'vue-loading-template'
     import {
         url_ssm_base, url_netease, url_imdb, url_douban, url_douban_book, url_metacritic, url_tomato,
         url_email, url_btbtdy, url_loldytt, url_api_netease, url_omdb, apikey_omdb, url_api_douban, apikey_api_douban,
@@ -731,7 +800,7 @@
                 numOfBooks: 2,
                 // 演员的展开与收起
                 brandOrFold: true,
-                subTitle: " +1s",
+                subTitle: " - Plus",
                 bookSearch: {},
                 bookComments: {},
                 bookReviews: {},
@@ -770,6 +839,8 @@
                 resourceSearch: [],
                 // 电影资源列表
                 resourceResult: [],
+                isResourceSearch: true,
+                isResourceResult: false,
                 // 资源不同类型
                 resourceTypeList: [
                     {type: "未知类型", list: []},
@@ -804,7 +875,8 @@
             }
         },
         components: {
-            Aplayer
+            Aplayer,
+            VueLoading
         },
         props: {},
         created: function () {
@@ -887,10 +959,10 @@
                     // 获取电影资源信息
                     if (this.movieBase.name) {
                         // 获取电影资源搜索列表
-                        this.getResource(this.movieBase.name, 0, 2);
+                        this.getResource(this.movieBase.name, 0, 2, 1);
                         this.resourceSearchKeyword = this.movieBase.name;
                     } else if (responseApi.title) {
-                        this.getResource(responseApi.title, 0, 2);
+                        this.getResource(responseApi.title, 0, 1, 2, 1);
                         this.resourceSearchKeyword = responseApi.title;
                     } else {
                         console.log("there is no name to get movie resource...")
@@ -1388,12 +1460,21 @@
             },
 
             // 获取电影资源
-            getResource: function (keyword, requestType, dateType) {
+            getResource: function (keyword, requestType, dateType, searchMax) {
+                if (requestType == 0) {
+                    this.resourceSearch = [];
+                } else if (requestType == 1) {
+                    this.resourceResult = [];
+                }
+                if (searchMax == -1) {
+                    searchMax = this.getNowResourceMax();
+                }
                 axios.get(url_ssm_base + "/subject/getResource", {
                     params: {
                         keyword: keyword,
                         requestType: requestType,
-                        dateType: dateType
+                        dateType: dateType,
+                        searchMax: searchMax
                     }
                 }).then(response => {
                     if (response.data && response.data.code) {
@@ -1402,8 +1483,14 @@
                             console.log(response.data);
                             if (requestType == 0) {
                                 this.resourceSearch = response.data.data;
+                                if (this.resourceSearch.length == 0) {
+                                    this.isResourceSearch = false;
+                                }
                             } else if (requestType == 1) {
                                 this.resourceResult = response.data.data;
+                                if (this.resourceResult.length != 0) {
+                                    this.isResourceResult = true;
+                                }
                                 // 解析资源内容
                                 this.parseResourceResult();
 
@@ -1599,6 +1686,21 @@
                             break;
                     }
                 }
+            },
+            // 获取当前资源目录电影最大数
+            getNowResourceMax: function () {
+                var clientMap = {};
+                for (let i = 0; i < this.resourceSearch.length; i++) {
+                    if (!clientMap[this.resourceSearch[i].clientType]) {
+                        clientMap[this.resourceSearch[i].clientType] = [];
+                    }
+                    clientMap[this.resourceSearch[i].clientType].push(this.resourceSearch[i].movieUrl);
+                }
+                var list = [];
+                for (var key in clientMap) {
+                    list.push(clientMap[key].length);
+                }
+                return Math.max.apply(null, list);
             },
         }
         ,

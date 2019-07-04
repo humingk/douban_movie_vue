@@ -90,17 +90,17 @@
                         <div class="bd">
                             <ul class="list-s" v-if="actorAllApi.works">
                                 <li class v-for="item in actorAllApi.works">
-                                    <div class="pic">
-                                        <a v-if="item.subject.images" :href="item.subject.images.small">
+                                    <a target="_blank" :href="'/subject/'+item.subject.id">
+                                        <div class="pic">
                                             <img :src="item.subject.images.large" rel="noreferrer">
-                                        </a>
-                                    </div>
-                                    <div class="info">
-                                        <a target="_blank"
-                                           :href="'/subject/'+item.subject.id">{{item.subject.title}}
-                                        </a>
-                                        {{item.subject.rating.average}}
-                                    </div>
+                                        </div>
+                                        <div class="info">
+                                            <a target="_blank"
+                                               :href="'/subject/'+item.subject.id">{{item.subject.title}}
+                                            </a>
+                                            {{item.subject.rating.average}}
+                                        </div>
+                                    </a>
                                 </li>
                             </ul>
                         </div>
@@ -115,14 +115,16 @@
                     <div class="bd">
                         <ul class="list-s">
                             <li class v-for="(item,index) in actorWorksApi.works" v-if="index<12">
-                                <div class="pic">
-                                    <a v-if="item.subject.images" :href="item.subject.images.small">
-                                        <img :src="item.subject.images.large" rel="noreferrer"></a>
-                                </div>
-                                <div class="info">
-                                    <a target="_blank" :href="'/subject/'+item.subject.id">{{item.subject.title}}</a>
-                                    {{item.subject.rating.average}}
-                                </div>
+                                <a target="_blank" :href="'/subject/'+item.subject.id">
+                                    <div class="pic">
+                                        <img :src="item.subject.images.large" rel="noreferrer">
+                                    </div>
+                                    <div class="info">
+                                        <a target="_blank"
+                                           :href="'/subject/'+item.subject.id">{{item.subject.title}}</a>
+                                        {{item.subject.rating.average}}
+                                    </div>
+                                </a>
                             </li>
                         </ul>
                     </div>
@@ -134,16 +136,14 @@
                         </h2>
                     </div>
                     <div class="bd">
-                        <ul class="list-s" v-for="(item,index) in cooperationActors" v-if="index<20">
-                            <a target="_blank" :href="'/celebrity/'+item.actor.actorId">{{item.actor.name}}</a>
-                            <span style="font-size: 14px">(合作 {{item.movieCount}} 次)</span>
-                            <ul class="info" style="border-top: 10px">
-                                <li v-for="movie in item.movies" style="font-size: 14px">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a target="_blank" :href="'/subject/'+movie.movieId">{{movie.name}}</a>
-                                    &nbsp;<span style="color:#e09015 ">{{movie.rate}}</span>
-                                </li>
-                            </ul>
-                        </ul>
+                        <!--                        <el-tree :data="cooperationActors" :-->
+                        <!--                                 node-key="id">-->
+                        <!--                                  <span class="custom-tree-node" slot-scope="{ node, data }">-->
+                        <!--                                          <span>{{ node.label }}</span>-->
+                        <!--                                  </span>-->
+                        <!---->
+                        <!--                        </el-tree>-->
+
                     </div>
                 </div>
             </div>
@@ -209,7 +209,7 @@
             },
             // 通过后台服务器获取与演员合作过的电影
             getCooperationActors: function (actorId) {
-                axios.get(url_ssm_base + "/celebrity/getCooperationActors?actorId=" + actorId).then(response => {
+                axios.get(url_ssm_base + "/celebrity/getCooperationActors?actorId=" + actorId + "&cooperationMin=3").then(response => {
                     if (response.data && response.data.code && response.data.message) {
                         if (response.data.code == 200 && response.data.message == "success") {
                             this.cooperationActors = response.data.data;
