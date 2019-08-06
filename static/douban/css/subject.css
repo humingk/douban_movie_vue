@@ -303,6 +303,7 @@ h2 {
 .subject {
     float: left;
     width: 415px;
+    height: 288px;
 }
 
 #mainpic {
@@ -780,9 +781,8 @@ div.comment-item {
 
 #interest_sectl {
     float: left;
-    width: 155px;
-    margin: 2px 0 0 0;
-    padding: 0 0 0 15px;
+    width: 140px;
+    margin-left: 15px;
     border-left: 1px solid #eaeaea;
     color: #9b9b9b;
 }
@@ -2417,7 +2417,7 @@ a {
 }
 
 .resourceTitle {
-    background-color: white;
+    /*background-color: white;*/
     color: #f7097a;
     border-color: #afa4a4;
     border-bottom: 1px solid;
@@ -2435,4 +2435,39 @@ a {
 
 .el-carousel__item:nth-child(2n+1) {
     background-color: #d3dce6;
+}
+
+.related-info {
+    margin-top: 20px;
+}
+
+/*背景图自动切换*/
+#backgroundImg {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    z-index: -2;
+}
+
+#backgroundImg img {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    opacity: 0; /*初始不透明度为0，图片都看不见*/
+    transition: opacity 1s linear; /*--重点--定义一个关于透明度的transition*/
+}
+
+#backgroundImg img.active {
+    opacity: 1; /*有active类的图片不透明度为1，即显示图片*/
+}
+
+
+/*部分板块半透明*/
+
+.glassbox {
+    background: rgba(255, 255, 255, 0.7);
 }

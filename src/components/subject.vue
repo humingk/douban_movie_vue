@@ -1,6 +1,12 @@
 <template>
     <div id="subject">
-<!--        <div v-show="movieApi && movieApi.id" :style="'{backgroundImage:url('+movieApi.photos[0].image+')}'"></div>-->
+        <div id="backgroundImg">
+            <img class="active" v-if="movieApi && movieApi.photos && movieApi.photos[0]"
+                 :src="movieApi.photos[0].image">
+            <img v-if="index < backgroundMax-1 && movieApi && movieApi.photos && movieApi.photos[index+1]"
+                 v-for="(item,index) in movieApi.photos"
+                 :src="movieApi.photos[index+1].image">
+        </div>
         <div id="wrapper" style="width:1040px">
             <vue-loading v-if="!movieBase.movieId"
                          type="spiningDubbles" color="#d9544e"
@@ -18,13 +24,13 @@
                     <div class="article" style="width: 675px">
                         <div class="indent clearfix">
                             <div class="subjectwrap clearfix">
-                                <div class="subject clearfix">
+                                <div class=" subject clearfix">
                                     <div id="mainpic" class="" v-if="movieApi.images">
                                         <a class="nbgnbg" v-if="movieApi.images" :href="movieApi.images.large"><img
                                                 :src="movieApi.images.large" rel="noreferrer"></a>
                                         <p class="gact"></p>
                                     </div>
-                                    <div class="info">
+                                    <div class="info glassbox">
                                         <span class="pl" v-if="movieBase.directors.length">导演: </span>
                                         <span class="attrs" v-for="(item,index) in movieBase.directors"><el-tooltip
                                                 content="该导演个人主页" placement="top"><a
@@ -79,7 +85,8 @@
                     <span class="attrs">{{imdbApi.Country}}</span><br>
                     </span>
                                         <span class="pl" v-if="movieBase.types.length">上映时间: </span>
-                                        <span class="attrs" v-for="(item,index) in movieBase.releasetimes">{{item.timeArea}}{{ index === movieBase.releasetimes.length-1 ? "" : " / " }}</span><br>
+                                        <span class="attrs"
+                                              v-for="(item,index) in movieBase.releasetimes">{{item.timeArea}}{{ index === movieBase.releasetimes.length-1 ? "" : " / " }}</span><br>
                                         <span class="pl" v-if="movieBase.movieId">豆瓣电影: </span>
                                         <span class="attrs">
                                         <el-tooltip :content="'豆瓣电影 - '+movieBase.name" placement="top">
@@ -99,7 +106,7 @@
                     </span>
                                     </div>
                                 </div>
-                                <div id="interest_sectl">
+                                <div id="interest_sectl" class="glassbox">
                                     <!--豆瓣评分-->
                                     <div class="rating_wrap clearbox">
                                         <div class="clearfix">
@@ -242,7 +249,7 @@
                             <h2>
                                 <i class="">剧情简介......</i>
                             </h2>
-                            <div class="indent" id="link-report">
+                            <div class="indent glassbox" id="link-report">
                         <span class="summary" v-if="movieApi.summary">
                         {{movieApi.summary}}
                        </span>
@@ -259,7 +266,7 @@
                                     (共计{{movieBase.directors.length+movieBase.writers.length + movieBase.leadingactors.length}}人)</a></el-tooltip></span>
                             </h2>
                             <ul class="celebrities-list from-subject __oneline">
-                                <li class="celebrity" v-for="item in movieApi.directors">
+                                <li class="celebrity glassbox" v-for="item in movieApi.directors">
                                     <a :href="'/celebrity/'+item.id" target="_blank" class="">
                                         <div class="avatar">
                                             <img :src="item.avatars.large" v-if="item.avatars" rel="noreferrer">
@@ -271,7 +278,7 @@
                                         </div>
                                     </a>
                                 </li>
-                                <li class="celebrity" v-for="item in movieApi.writers">
+                                <li class="celebrity glassbox" v-for="item in movieApi.writers">
                                     <a :href="'/celebrity/'+item.id" target="_blank" class="">
                                         <div class="avatar">
                                             <img :src="item.avatars.large" v-if="item.avatars" rel="noreferrer">
@@ -283,7 +290,7 @@
                                         </div>
                                     </a>
                                 </li>
-                                <li class="celebrity" v-for="(item,index) in movieApi.casts" v-if="index < 3">
+                                <li class="celebrity glassbox" v-for="(item,index) in movieApi.casts" v-if="index < 3">
                                     <a :href="'/celebrity/'+item.id" target="_blank" class="">
                                         <div class="avatar">
                                             <img :src="item.avatars.large" v-if="item.avatars" rel="noreferrer">
@@ -298,7 +305,7 @@
                             </ul>
                         </div>
 
-                        <div id="related-pic" class="related-pic">
+                        <div id="related-pic" class=" related-pic">
                             <h2>
                                 <i class>图片列表......</i>
                                 <span class="pl"><el-tooltip :content="'豆瓣电影 - '+movieBase.name+' 的所有图片'"
@@ -340,7 +347,7 @@
                             <span style="font-size: 12px">{{item.created_at}}</span>
                           </span>
                                         </h3>
-                                        <div class="short"
+                                        <div class="short glassbox"
                                              style="width: 337px;height: 150px;overflow: auto;font-size: 14px">
                                             {{item.content}}
                                         </div>
@@ -539,7 +546,7 @@
                              v-if="bookComments && bookComments.comments && bookComments.comments.length!=0">
                             <div class="mod-hd">
                                 <h2>
-                                    <i class>原著相关 <span style="color:#79078f"><a
+                                    <i class>原著相关 <span style="color:#79078f;"><a
                                             :href="url_douban_book+'/subject/'+bookComments.bookId"
                                             target="_blank">< {{bookComments.bookName}} ></a></span> 热门短评......</i>
                                     <span class="pl">
@@ -633,7 +640,8 @@
                     </div>
                     <div class="aside" style="position: absolute; margin-left: 690px;">
                         <!--mp3-->
-                        <div id="musicAbout"
+                        <div id="musicAbout" class="glassbox"
+                             v-if="isMusicAllOk && neteaseMusic && neteaseMusic.length!=0"
                              style="margin-bottom: 20px">
                             <h2 v-if="isMusicAllOk && neteaseMusic && neteaseMusic.length!=0">
                                 <i>配乐 / 相关
@@ -647,6 +655,7 @@
                                          type="bars" color="#d9544e"
                                          :size="{ width: '50px', height: '50px' }"></vue-loading>
                             <aplayer
+                                    style="background-color: transparent"
                                     :music="neteaseMusic[0]"
                                     :list="neteaseMusic"
                                     :showLrc="showLrc"
@@ -654,7 +663,8 @@
                             >
                             </aplayer>
                         </div>
-                        <div id="musicPlaylist"
+                        <div id="musicPlaylist" class="glassbox"
+                             v-if="isMusicAllOk && neteaseMusic && neteaseMusic.length!=0"
                              style="margin-bottom: 20px">
                             <h2 v-if="isMusicAllOk && neteaseMusic && neteaseMusic.length!=0">
                                 <i>歌单 / 相关
@@ -671,6 +681,7 @@
                                          :size="{ width: '50px', height: '50px' }"></vue-loading>
                             <aplayer
                                     autoplay
+                                    style="background-color: transparent"
                                     :music="neteasePlaylistSongs[0]"
                                     :list="neteasePlaylistSongs"
                                     :showLrc="showLrc"
@@ -678,7 +689,8 @@
                             >
                             </aplayer>
                         </div>
-                        <div id="musicAlbum"
+                        <div id="musicAlbum" class="glassbox"
+                             v-if="isMusicAllOk && neteaseMusic && neteaseMusic.length!=0"
                              style="margin-bottom: 20px">
                             <h2 v-if="isMusicAllOk && neteaseMusic && neteaseMusic.length!=0">
                                 <i>专辑 / 相关
@@ -693,6 +705,7 @@
                                          type="bars" color="#d9544e"
                                          :size="{ width: '50px', height: '50px' }"></vue-loading>
                             <aplayer
+                                    style="background-color: transparent"
                                     :music="neteaseAlbumSongs[0]"
                                     :list="neteaseAlbumSongs"
                                     :showLrc="showLrc"
@@ -701,15 +714,19 @@
                             </aplayer>
                         </div>
                         <!--原著信息-->
-                        <div :id="'book_'+index" v-if="bookSearch.books && bookSearch.count!=0"
-                             style="margin-top: 10px;margin-bottom: 20px;"
+                        <div :id="'book_'+index" class="glassbox" v-if="bookSearch.books && bookSearch.count!=0"
+                             style="margin-bottom: 20px;"
                              v-for="(book,index) in bookSearch.books">
                             <h2>
-                                <i class="">原著 / 相关 <a style="color:#79078f" :href="book.alt" target="_blank"><
-                                    {{book.title}}
-                                    > </a><span
-                                        v-if="book.rating && book.rating.average && book.rating.average!='0.0'"
-                                        style="color: #f7097a">{{book.rating.average}}</span></i>
+                                <i class="">原著 / 相关
+                                    <el-tooltip :content="'豆瓣读书 - '+book.title" placement="top"><a style="color:#79078f"
+                                                                                                   :href="book.alt"
+                                                                                                   target="_blank"><
+                                        {{book.title}}
+                                        > </a></el-tooltip>
+                                    <span
+                                            v-if="book.rating && book.rating.average && book.rating.average!='0.0'"
+                                            style="color: #f7097a">{{book.rating.average}}</span></i>
                             </h2>
                             <div
                                     style="box-shadow: 2px 3px 6px 0 rgba(0,0,0,0.2);transition: 0.3s;width: 100%;border-radius: 3px;min-height: 120px;margin-left: 5px;">
@@ -746,8 +763,8 @@
 
                         <!--                                            资源列表信息-->
                         <div id="resourceSearch" v-if="isResourceSearch">
-                            <div
-                                    style="box-shadow: 3px 5px 10px 0 rgba(192,192,192,0.2);transition: 0.3s;width: 100%;border-radius: 3px;margin-left: 5px;">
+                            <div class="glassbox"
+                                 style="box-shadow: 3px 5px 10px 0 rgba(192,192,192,0.2);transition: 0.3s;width: 100%;border-radius: 3px;margin-left: 5px;">
                                 <vue-loading v-show="resourceSearch && resourceSearch.length==0"
                                              type="bars" color="#d9544e"
                                              :size="{ width: '50px', height: '50px' }"></vue-loading>
@@ -756,20 +773,22 @@
                                         <i class="">资源目录 <span
                                                 style="color:#79078f">< {{resourceSearchKeyword}} > </span></i>
                                     </h2>
-                                    <div v-for="item in resourceSearch" class="resourceName">
-                                        <span style="color:#ff5722;font-size: 13px" v-if="item.movieName">{{item.movieName}}</span>
+                                    <div>
+                                        <div v-for="item in resourceSearch" class="resourceName">
+                                            <span style="color:#ff5722;font-size: 13px" v-if="item.movieName">{{item.movieName}}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <!--                        点击资源-->
                         <div style="margin: 20px 0px 20px 0px;" v-if="isResourceSearch||isResourceResult">
-                            <el-button style="margin-bottom:5px;" type="primary" round
+                            <el-button style="margin-bottom:5px;margin-left: 28px" type="primary" round
                                        @click="getResource(resourceSearchKeyword,0,2,3)">
                                 以上没有你想看？点击搜索更多...
                             </el-button>
                             <br>
-                            <el-button type="success" round
+                            <el-button style="margin-left: 28px" type="success" round
                                        @click="getResource(resourceSearchKeyword,1,2,-1)">
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一键获取所有资源&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             </el-button>
@@ -781,7 +800,7 @@
                             <vue-loading v-show="resourceResult && resourceResult.length==0"
                                          type="bars" color="#d9544e"
                                          :size="{ width: '50px', height: '50px' }"></vue-loading>
-                            <div v-show="resourceResult && resourceResult.length!=0">
+                            <div class="glassbox" v-show="resourceResult && resourceResult.length!=0">
                                 <h2>
                                     <i class="">资源内容 <span
                                             style="color:#79078f">< {{resourceSearchKeyword}} > </span></i>
@@ -791,7 +810,8 @@
                                              :size="{ width: '50px', height: '50px' }"></vue-loading>
                                 <div
                                         style="box-shadow: 3px 5px 10px 0 rgba(192,192,192,0.2);transition: 0.3s;width: 100%;border-radius: 3px;margin-left: 5px;">
-                                    <div v-for="type in resourceTypeList" v-if="type.list.length!=0">
+                                    <div v-for="type in resourceTypeList"
+                                         v-if="type.list.length!=0">
                                         <h3 class="resourceTitle"><i>{{type.type}}</i></h3>
                                         <div v-for="res in type.list"
                                              class="resourceName">
@@ -837,6 +857,10 @@
                 numOfSongs: 2,
                 numOfAlbums: 2,
                 numOfPlaylists: 2,
+                // 背景图最多展示数
+                backgroundMax: 5,
+                // 背景图切换时间/s
+                backgroundTime: 10,
                 // 书籍最大展示数
                 numOfBooks: 2,
                 // 演员的展开与收起
@@ -1029,6 +1053,8 @@
                         // 通过imdb keyword year 获取 IMDB信息
                         this.getImdbByKeyword(keywordsForImdb, responseApi.year ? responseApi.year : null, 0);
                     }
+                    // 背景自动切换
+                    this.changeBackgroundImg(this.backgroundMax, this.backgroundTime);
                     // 获取网易云音乐 通过 moviebase 电影搜索相关
                     // this.getNetease(this.movieBase.name);
                     let keywordsForNetease = [];
@@ -1755,6 +1781,24 @@
                 }
                 return Math.max.apply(null, list);
             },
+            // 关于背景图的自动切换
+            changeBackgroundImg: function (max, time) {
+                var backgroundImg = document.getElementById("backgroundImg");
+                var imgs = backgroundImg.getElementsByTagName("img");
+                //当前活跃的图片编号
+                var current = 0;
+                //定时进行图片切换
+                setInterval(() => {
+                    //切换图片 ----
+                    //图片淡出
+                    imgs[current].className = "";
+                    //自增1
+                    current++;
+                    if (current >= max) current = 0;
+                    //图片淡入
+                    imgs[current].className = "active";
+                }, 1000 * time);
+            }
         }
         ,
         filters: {
