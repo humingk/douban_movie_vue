@@ -1,5 +1,6 @@
 <template>
     <div id="subject">
+<!--        <div v-show="movieApi && movieApi.id" :style="'{backgroundImage:url('+movieApi.photos[0].image+')}'"></div>-->
         <div id="wrapper" style="width:1040px">
             <vue-loading v-if="!movieBase.movieId"
                          type="spiningDubbles" color="#d9544e"
@@ -187,8 +188,9 @@
                                                     <div :class="'ll bigstar '+getBigRateTypeForMetacritic(item.Value)"></div>
                                                     <div class="rating_sum">
                                                         <div class="rating_people" v-if="movieApi.original_title">
-                                                            <el-tooltip :content="'Rotten Tomatoes - '+movieBase.name"
-                                                                        placement="top"><a
+                                                            <el-tooltip
+                                                                    :content="'Rotten Tomatoes - '+movieBase.name"
+                                                                    placement="top"><a
                                                                     target="_blank"
                                                                     :href="url_metacritic+'/movie/'+getMetacriticName(movieApi.original_title)">
                                                                 Metacritic -->
@@ -219,7 +221,8 @@
                                                 <div class="rating_right ">
                                                     <div :class="'ll bigstar '+getBigRateTypeForTomatoes(item.Value)"></div>
                                                     <div class="rating_sum" v-if="movieApi.original_title">
-                                                        <el-tooltip :content="'烂蕃茄 - '+movieBase.name" placement="top">
+                                                        <el-tooltip :content="'烂蕃茄 - '+movieBase.name"
+                                                                    placement="top">
                                                             <a
                                                                     target="_blank"
                                                                     :href="url_tomato+'/m/'+getTomatoName(movieApi.original_title)">
@@ -655,11 +658,12 @@
                              style="margin-bottom: 20px">
                             <h2 v-if="isMusicAllOk && neteaseMusic && neteaseMusic.length!=0">
                                 <i>歌单 / 相关
-                                    <el-tooltip :content="'网易云音乐 - 歌单 -'+neteasePlaylistSongsName" placement="top"><a
-                                            style="color:#79078f"
-                                            :href="url_netease+'/#/playlist?id='+neteasePlaylistSongsId"
-                                            target="_blank"><
-                                        {{neteasePlaylistSongsName}} > </a></el-tooltip>
+                                    <el-tooltip :content="'网易云音乐 - 歌单 -'+neteasePlaylistSongsName" placement="top">
+                                        <a
+                                                style="color:#79078f"
+                                                :href="url_netease+'/#/playlist?id='+neteasePlaylistSongsId"
+                                                target="_blank"><
+                                            {{neteasePlaylistSongsName}} > </a></el-tooltip>
                                 </i>
                             </h2>
                             <vue-loading v-show="!isMusicAllOk && neteaseMusic && neteaseMusic.length==0 "
@@ -739,15 +743,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!--                        点击资源-->
-                        <div style="border-bottom: 10px" v-if="isResourceSearch||isResourceResult">
-                            <el-button type="primary" @click="getResource(resourceSearchKeyword,0,2,3)">
-                                更多目录
-                            </el-button>
-                            <el-button type="primary" @click="getResource(resourceSearchKeyword,1,2,-1)">
-                                目录资源
-                            </el-button>
-                        </div>
+
                         <!--                                            资源列表信息-->
                         <div id="resourceSearch" v-if="isResourceSearch">
                             <div
@@ -761,12 +757,23 @@
                                                 style="color:#79078f">< {{resourceSearchKeyword}} > </span></i>
                                     </h2>
                                     <div v-for="item in resourceSearch" class="resourceName">
-                                        <span style="color:#047CCC;font-size: 13px" v-if="item.movieName">{{item.movieName}}</span>
+                                        <span style="color:#ff5722;font-size: 13px" v-if="item.movieName">{{item.movieName}}</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
+                        <!--                        点击资源-->
+                        <div style="margin: 20px 0px 20px 0px;" v-if="isResourceSearch||isResourceResult">
+                            <el-button style="margin-bottom:5px;" type="primary" round
+                                       @click="getResource(resourceSearchKeyword,0,2,3)">
+                                以上没有你想看？点击搜索更多...
+                            </el-button>
+                            <br>
+                            <el-button type="success" round
+                                       @click="getResource(resourceSearchKeyword,1,2,-1)">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一键获取所有资源&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </el-button>
+                        </div>
                         <!--资源信息-->
 
                         <div id="resourchResult" v-if="isResourceResult"
@@ -779,6 +786,9 @@
                                     <i class="">资源内容 <span
                                             style="color:#79078f">< {{resourceSearchKeyword}} > </span></i>
                                 </h2>
+                                <vue-loading v-show="resourceResult && resourceResult.length==0"
+                                             type="bars" color="#d9544e"
+                                             :size="{ width: '50px', height: '50px' }"></vue-loading>
                                 <div
                                         style="box-shadow: 3px 5px 10px 0 rgba(192,192,192,0.2);transition: 0.3s;width: 100%;border-radius: 3px;margin-left: 5px;">
                                     <div v-for="type in resourceTypeList" v-if="type.list.length!=0">
@@ -1275,7 +1285,7 @@
                         // 歌词
                         this.getNeteaseMusic(song_id, songName, artistName, type,
                             (resultMusic.data.songs && resultMusic.data.songs.length != 0 && resultMusic.data.songs[0].al &&
-                                resultMusic.data.songs[0].al.picUrl) ? resultMusic.data.songs[0].al.picUrl : null
+                                resultMusic.data.songs[0].al.picUrl) ? resultMusic.data.songs[0].al.picUrl : ""
                         );
                     } else {
                         console.log("get netease music pic " + song_id + " failed...(server error)");
