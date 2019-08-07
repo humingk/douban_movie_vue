@@ -1,7 +1,7 @@
 <template>
     <div id="subject">
         <div id="backgroundImg">
-            <img class="active" v-if="movieApi && movieApi.photos && movieApi.photos[0]"
+            <img class="active forImage" v-if="movieApi && movieApi.photos && movieApi.photos[0]"
                  :src="movieApi.photos[0].image">
             <img v-if="index < backgroundMax-1 && movieApi && movieApi.photos && movieApi.photos[index+1]"
                  v-for="(item,index) in movieApi.photos"
@@ -26,7 +26,8 @@
                             <div class="subjectwrap clearfix">
                                 <div class=" subject clearfix">
                                     <div id="mainpic" class="" v-if="movieApi.images">
-                                        <a class="nbgnbg" v-if="movieApi.images" :href="movieApi.images.large"><img
+                                        <a class="nbgnbg radis" v-if="movieApi.images"
+                                           :href="movieApi.images.large"><img
                                                 :src="movieApi.images.large" rel="noreferrer"></a>
                                         <p class="gact"></p>
                                     </div>
@@ -269,7 +270,8 @@
                                 <li class="celebrity glassbox" v-for="item in movieApi.directors">
                                     <a :href="'/celebrity/'+item.id" target="_blank" class="">
                                         <div class="avatar">
-                                            <img :src="item.avatars.large" v-if="item.avatars" rel="noreferrer">
+                                            <img :src="item.avatars.large" class="radis" v-if="item.avatars"
+                                                 rel="noreferrer">
                                         </div>
                                     </a>
                                     <a :href="'/celebrity/'+item.id" target="_blank" class="">
@@ -281,7 +283,8 @@
                                 <li class="celebrity glassbox" v-for="item in movieApi.writers">
                                     <a :href="'/celebrity/'+item.id" target="_blank" class="">
                                         <div class="avatar">
-                                            <img :src="item.avatars.large" v-if="item.avatars" rel="noreferrer">
+                                            <img :src="item.avatars.large" v-if="item.avatars" class="radis"
+                                                 rel="noreferrer">
                                         </div>
                                     </a>
                                     <a :href="'/celebrity/'+item.id" target="_blank" class="">
@@ -293,7 +296,8 @@
                                 <li class="celebrity glassbox" v-for="(item,index) in movieApi.casts" v-if="index < 3">
                                     <a :href="'/celebrity/'+item.id" target="_blank" class="">
                                         <div class="avatar">
-                                            <img :src="item.avatars.large" v-if="item.avatars" rel="noreferrer">
+                                            <img :src="item.avatars.large" v-if="item.avatars" class="radis"
+                                                 rel="noreferrer">
                                         </div>
                                     </a>
                                     <a :href="'/celebrity/'+item.id" target="_blank" class="">
@@ -317,7 +321,7 @@
                                 <li v-for="(item,index) in movieApi.photos">
                                     <a :href="item.alt" target="_blank">
                                         <img :src="item.cover | getSmallPhoto" alt="图片" rel="noreferrer"
-                                             style="padding: 8px;box-sizing: border-box">
+                                             style="padding: 8px;box-sizing: border-box;border-radius: 18px">
                                     </a>
                                 </li>
                             </ul>
@@ -335,9 +339,10 @@
                                 </h2>
                             </div>
                             <el-carousel :interval="3000" type="card" height="200px">
-                                <el-carousel-item v-for="(item,index) in movieApi.popular_comments" :key="index">
+                                <el-carousel-item class="radis glassbox"
+                                                  v-for="(item,index) in movieApi.popular_comments" :key="index">
                                     <div>
-                                        <h3 style="background-color:#11AEBF">
+                                        <h3 :class="randomBoxColor()">
                                             <i class="el-icon-caret-right"></i>
                                             <span>
                             <a :href="url_douban+'/people/'+item.author.id" target="_blank" class="">{{item.author.name}}</a>
@@ -369,11 +374,11 @@
                                 </h2>
                             </header>
                             <el-carousel :interval="3000" type="card" height="180px">
-                                <el-carousel-item class="main review-item"
+                                <el-carousel-item class="radis glassbox main review-item"
                                                   v-for="(item,index) in movieApi.popular_reviews" :key="index">
 
                                     <div class="main-bd">
-                                        <h3 style="background-color: #A0BF30 ">
+                                        <h3 :class="randomBoxColor()">
                                             <header class="main-hd">
                                                 <a :href="url_douban+'/people/'+item.author.id" class="avator">
                                                     <img width="24" height="24" :src="item.author.avatar">
@@ -416,11 +421,11 @@
                                     <div class="tab-bd">
                                         <div id="song-hot-comments" class="tab">
                                             <el-carousel :interval="3000" type="card" height="200px">
-                                                <el-carousel-item
-                                                        v-for="(itemOfSong,index) in item.data.hotComments"
-                                                        :key="index">
+                                                <el-carousel-item class="radis glassbox"
+                                                                  v-for="(itemOfSong,index) in item.data.hotComments"
+                                                                  :key="index">
                                                     <div class="comment">
-                                                        <h3 style="background-color: #209754">
+                                                        <h3 :class="randomBoxColor()">
 
                                                             <span class="comment-info">
                               <a :href="url_netease+'/user/home?id='+itemOfSong.user.userId" target="_blank" class=""> {{itemOfSong.user.nickname}} </a>
@@ -464,11 +469,11 @@
                                     <div class="tab-bd">
                                         <div id="album-hot-comments" class="tab">
                                             <el-carousel :interval="3000" type="card" height="200px">
-                                                <el-carousel-item
-                                                        v-for=" (itemOfAlbum,index) in item.data.hotComments"
-                                                        :key="index">
+                                                <el-carousel-item class="radis glassbox"
+                                                                  v-for=" (itemOfAlbum,index) in item.data.hotComments"
+                                                                  :key="index">
                                                     <div class="comment">
-                                                        <h3 style="background-color:#F2A2D9">
+                                                        <h3 :class="randomBoxColor()">
                             <span class="comment-vote">
 
                             </span>
@@ -513,11 +518,11 @@
                                     <div class="tab-bd">
                                         <div id="playlist-hot-comments" class="tab">
                                             <el-carousel :interval="3000" type="card" height="200px">
-                                                <el-carousel-item
-                                                        v-for=" (itemOfPlaylist,index) in item.data.hotComments"
-                                                        :key="index">
+                                                <el-carousel-item class="radis glassbox"
+                                                                  v-for=" (itemOfPlaylist,index) in item.data.hotComments"
+                                                                  :key="index">
                                                     <div class="comment">
-                                                        <h3 style="background-color: #F0C419 ">
+                                                        <h3 :class="randomBoxColor()">
                             <span class="comment-vote">
 
                             </span>
@@ -560,10 +565,11 @@
                                 <div class="tab-bd">
                                     <div id="book-hot-comments" class="tab">
                                         <el-carousel :interval="3000" type="card" height="200px">
-                                            <el-carousel-item v-for=" (item,index) in bookComments.comments"
+                                            <el-carousel-item class="radis glassbox"
+                                                              v-for=" (item,index) in bookComments.comments"
                                                               :key="index">
                                                 <div class="comment">
-                                                    <h3 style="background-color: #955BA5">
+                                                    <h3 :class="randomBoxColor()">
                                                     <span class="comment-info">
                             <a :href="url_douban_book+'/people/'+item.author.id" target="_blank" class="">{{item.author.name}}</a>
                             <span v-if="item.rating && item.rating.value"
@@ -603,12 +609,13 @@
                                 </header>
                                 <div class="review-list">
                                     <el-carousel :interval="3000" type="card" height="180px">
-                                        <el-carousel-item v-for="(item,index) in bookReviews.reviews"
+                                        <el-carousel-item class="radis glassbox"
+                                                          v-for="(item,index) in bookReviews.reviews"
                                                           v-if="item.summary && item.summary.toString().charAt(0)!='{'"
                                                           :key="index">
 
                                             <div class="main-bd">
-                                                <h3 style="background-color: #2EECF3">
+                                                <h3 :class="randomBoxColor()">
                                                     <header class="main-hd">
                                                         <a :href="url_douban_book+'/people/'+item.author.id"
                                                            class="avator">
@@ -641,7 +648,7 @@
                     <div class="aside" style="position: absolute; margin-left: 690px;">
                         <!--mp3-->
                         <div id="musicAbout" class="glassbox"
-                             v-if="isMusicAllOk && neteaseMusic && neteaseMusic.length!=0"
+                             v-if="isMusicAllOk && neteaseMusic && neteaseMusic.length!=0 && neteaseMusic && neteaseMusic.length!=0"
                              style="margin-bottom: 20px">
                             <h2 v-if="isMusicAllOk && neteaseMusic && neteaseMusic.length!=0">
                                 <i>配乐 / 相关
@@ -664,7 +671,7 @@
                             </aplayer>
                         </div>
                         <div id="musicPlaylist" class="glassbox"
-                             v-if="isMusicAllOk && neteaseMusic && neteaseMusic.length!=0"
+                             v-if="isMusicAllOk && neteaseMusic && neteaseMusic.length!=0 && neteasePlaylistSongs && neteasePlaylistSongs.length!=0"
                              style="margin-bottom: 20px">
                             <h2 v-if="isMusicAllOk && neteaseMusic && neteaseMusic.length!=0">
                                 <i>歌单 / 相关
@@ -690,7 +697,7 @@
                             </aplayer>
                         </div>
                         <div id="musicAlbum" class="glassbox"
-                             v-if="isMusicAllOk && neteaseMusic && neteaseMusic.length!=0"
+                             v-if="isMusicAllOk && neteaseMusic && neteaseMusic.length!=0 && neteaseAlbumSongs && neteaseAlbumSongs.length!=0"
                              style="margin-bottom: 20px">
                             <h2 v-if="isMusicAllOk && neteaseMusic && neteaseMusic.length!=0">
                                 <i>专辑 / 相关
@@ -764,7 +771,7 @@
                         <!--                                            资源列表信息-->
                         <div id="resourceSearch" v-if="isResourceSearch">
                             <div class="glassbox"
-                                 style="box-shadow: 3px 5px 10px 0 rgba(192,192,192,0.2);transition: 0.3s;width: 100%;border-radius: 3px;margin-left: 5px;">
+                                 style="box-shadow: 3px 5px 10px 0 rgba(192,192,192,0.2);transition: 0.3s;width: 100%;">
                                 <vue-loading v-show="resourceSearch && resourceSearch.length==0"
                                              type="bars" color="#d9544e"
                                              :size="{ width: '50px', height: '50px' }"></vue-loading>
@@ -936,7 +943,40 @@
                     types: [],
                     tags: [],
                     releasetimes: []
-                }
+                },
+                // 评论板颜色
+                boxColor: [
+                    "color0",
+                    "color1",
+                    "color2",
+                    "color3",
+                    "color4",
+                    "color5",
+                    "color6",
+                    "color7",
+                    "color8",
+                    "color9",
+                    "color10",
+                    "color11",
+                    "color12",
+                    "color13",
+                    "color14",
+                    "color15",
+                    "color16",
+                    "color17",
+                    "color18",
+                    "color19",
+                    "color20",
+                    "color21",
+                    "color22",
+                    "color23",
+                    "color24",
+                    "color25",
+                    "color26",
+                    "color27",
+                    "color28",
+                    "color29",
+                ]
             }
         },
         components: {
@@ -1780,6 +1820,10 @@
                     list.push(clientMap[key].length);
                 }
                 return Math.max.apply(null, list);
+            },
+            // 评论板的随机颜色
+            randomBoxColor: function () {
+                return this.boxColor[Math.floor(Math.random() * this.boxColor.length)];
             },
             // 关于背景图的自动切换
             changeBackgroundImg: function (max, time) {

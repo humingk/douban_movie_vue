@@ -3,7 +3,7 @@
     <div id="db-nav-movie" class="nav">
       <div class="nav-wrap">
         <div class="nav-primary">
-          <a href="/" ><img class="nav-logo" src="../../static/images/logo2-1.jpg"></img></a>
+          <a href="/" ><img class="nav-logo" src="../../static/images/logo3.png"></img></a>
           <div class="nav-search">
             <div class="inp">
               <!--keyup事件           即时搜索-->
@@ -13,6 +13,7 @@
               <!--使用blur自动关闭搜索提示框-->
               <!--使用focus自动打开搜索提示框-->
               <input id="inp-query" ref="searchInput" size="22" maxlength="60" placeholder="搜索电影、影人" autocomplete="off"
+                     class="glassbox"
                      type="text" v-model="keyword"
                      @click="resetNow()"
                      @blur="clearInput()"
@@ -26,18 +27,18 @@
               <!--<span class="search-reset" @click="clearInput()">&times;</span>-->
               <span></span>
             </div>
-            <div class="inp-btn">
-              <input @click="search()">
-            </div>
+<!--            <div class="inp-btn">-->
+<!--              <input @click="search()">-->
+<!--            </div>-->
             <div @keyup.esc="clearInput"></div>
-            <div id="search_suggest" style="position:fixed;margin:5px 300px 0px 50px;width: 465px;">
+            <div id="search_suggest" style="position:fixed;margin:5px 300px 0px 70px;width: 465px;">
               <transition-group name="itemfade" tag="ul" mode="out-in"
                                 v-cloak :modal-append-to-body="false">
                 <li v-for="(item,index) in searchResult"
                     v-if="item.name!=''"
-                    style="background-color: #b0eae7;border-top: 1px solid;border-color: #c7cbff;height: auto;"
+                    style="background: rgba(255, 255, 255, 0.9);border-top: 1px solid;border-color: #c7cbff;height: auto;"
                     :class="{selectback:index==now}"
-                    class="search-select-option search-select-list"
+                    class="search-select-option search-select-list searchBlur"
                     @mouseover="selectHover(index)"
                     @mouseout="resetNow()"
                     @click="selectClick(index)"
@@ -50,6 +51,16 @@
                 </li>
               </transition-group>
             </div>
+          </div>
+          <div id="github">
+            <a title="访问Github仓库" href="https://github.com/humingk/douban_movie"
+               target="_blank">
+              <svg viewBox="0 0 250 250" style="position:absolute;top: 0;right: 35px;padding: 20px 0 0 0"  width="86px" height="86px" aria-hidden="true">
+                <path d="m0,-0.18282l115,115l27,27l108,108l0,-250c-83.33333,0 -166.66667,0 -250,0zm115,115c-0.1,0.1 3.7,1.5 4.8,0.4l6.95,-7.16316c-5.15026,-1.57317 -13.00742,-5.41018 -15.56632,-7.93246c-2.5589,-2.52229 -0.66473,-14.59258 -3.15524,-15.76615c-2.4905,-1.17356 -4.39185,-7.23412 -4.82385,-9.27639c-0.43201,-2.04227 5.44511,-0.88909 8.92823,1.48788c3.48312,2.37697 5.16772,16.80688 6.11034,18.64254c0.94263,1.83568 7.56678,9.79925 15.80772,6.0323c8.24094,-3.76695 5.84912,-3.02456 8.14912,-2.82456c-8.4,-10.6 -14.7,-24.2 1.6,-40.6c4.7,-4.6 10.2,-6.8 15.9,-7c0.6,-1.6 3.5,-7.4 11.7,-10.9c0,0 4.7,2.4 7.4,16.1c4.3,2.4 8.4,5.6 12.1,9.2c3.6,3.6 6.8,7.8 9.2,12.2c13.7,2.6 16.2,7.3 16.2,7.3c-3.6,8.2 -9.4,11.1 -10.9,11.7c-0.3,5.8 -2.4,11.2 -7.1,15.9c-16.4,16.4 -30,10 -40.6,1.6c0.2,2.8 -1,6.8 -5,10.8l-11.7,11.6c-1.2,1.2 0.6,5.4 0.8,5.3l-26.8,-26.8z"
+                      stroke-width="1.5" fill="#0597F2">
+                </path>
+              </svg>
+            </a>
           </div>
         </div>
       </div>
@@ -71,16 +82,7 @@
 <!--          </ul>-->
         </div>
       </div>
-      <div id="github">
-        <a title="访问Github仓库" href="https://github.com/humingk/douban_movie"
-           target="_blank">
-          <svg viewBox="0 0 250 250" style="position:absolute;top: 0;right: 0;"  width="130px" height="130px" aria-hidden="true">
-            <path d="m0,-0.18282l115,115l27,27l108,108l0,-250c-83.33333,0 -166.66667,0 -250,0zm115,115c-0.1,0.1 3.7,1.5 4.8,0.4l6.95,-7.16316c-5.15026,-1.57317 -13.00742,-5.41018 -15.56632,-7.93246c-2.5589,-2.52229 -0.66473,-14.59258 -3.15524,-15.76615c-2.4905,-1.17356 -4.39185,-7.23412 -4.82385,-9.27639c-0.43201,-2.04227 5.44511,-0.88909 8.92823,1.48788c3.48312,2.37697 5.16772,16.80688 6.11034,18.64254c0.94263,1.83568 7.56678,9.79925 15.80772,6.0323c8.24094,-3.76695 5.84912,-3.02456 8.14912,-2.82456c-8.4,-10.6 -14.7,-24.2 1.6,-40.6c4.7,-4.6 10.2,-6.8 15.9,-7c0.6,-1.6 3.5,-7.4 11.7,-10.9c0,0 4.7,2.4 7.4,16.1c4.3,2.4 8.4,5.6 12.1,9.2c3.6,3.6 6.8,7.8 9.2,12.2c13.7,2.6 16.2,7.3 16.2,7.3c-3.6,8.2 -9.4,11.1 -10.9,11.7c-0.3,5.8 -2.4,11.2 -7.1,15.9c-16.4,16.4 -30,10 -40.6,1.6c0.2,2.8 -1,6.8 -5,10.8l-11.7,11.6c-1.2,1.2 0.6,5.4 0.8,5.3l-26.8,-26.8z"
-                  stroke-width="1.5" fill="#0597F2">
-            </path>
-          </svg>
-        </a>
-      </div>
+
     </div>
   </div>
 </template>

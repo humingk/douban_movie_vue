@@ -198,7 +198,6 @@ h1 .year {
 }
 
 h3 {
-    margin-left: 4px;
     font: 14px Arial, Helvetica, sans-serif;
     margin-bottom: 1px;
     line-height: 1.8
@@ -307,10 +306,9 @@ h2 {
 }
 
 #mainpic {
-    margin: 3px 0 0 0;
     float: left;
     text-align: center;
-    margin: 3px 12px 0 0;
+    margin: 0 12px 0 0;
     max-width: 155px;
     overflow: hidden;
 }
@@ -1312,10 +1310,10 @@ img {
     font-size: 12px;
     padding: 4px;
     line-height: 12px;
-    -ms-transform: scale(0.8);
-    -moz-transform: scale(0.8);
-    -webkit-transform: scale(0.8);
-    transform: scale(0.8);
+    -ms-transform: scale(0.9);
+    -moz-transform: scale(0.9);
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
     -ms-transform-origin: left top;
     -moz-transform-origin: left top;
     -webkit-transform-origin: left top;
@@ -2430,11 +2428,11 @@ a {
 }
 
 .el-carousel__item:nth-child(2n) {
-    background-color: #99a9bf;
+    /*background-color: #99a9bf;*/
 }
 
 .el-carousel__item:nth-child(2n+1) {
-    background-color: #d3dce6;
+    /*background-color: #d3dce6;*/
 }
 
 .related-info {
@@ -2455,19 +2453,121 @@ a {
     position: fixed;
     top: 0px;
     left: 0px;
-    height: 100%;
+    /*height: 100%;*/
     width: 100%;
     opacity: 0; /*初始不透明度为0，图片都看不见*/
-    transition: opacity 1s linear; /*--重点--定义一个关于透明度的transition*/
+    transition: opacity 2s linear; /*--重点--定义一个关于透明度的transition*/
+    object-fit: cover;
+
 }
 
 #backgroundImg img.active {
     opacity: 1; /*有active类的图片不透明度为1，即显示图片*/
+
 }
 
 
 /*部分板块半透明*/
 
 .glassbox {
-    background: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.75);
+    border-radius: 8px;
 }
+
+/*圆角*/
+.radis {
+    border-radius: 8px;
+}
+
+/*评论板颜色*/
+.color0{
+    background: rgba(172, 223, 131, 0.9);
+}
+.color1{
+    background: rgba(200, 147, 19, 0.9);
+}
+.color2{
+    background: rgba(174, 236, 235, 0.9);
+}
+.color3{
+    background: rgba(99, 253, 143, 0.9);
+}
+.color4{
+    background: rgba(178, 232, 228, 0.9);
+}
+.color5{
+    background: rgba(178, 188, 232, 0.9);
+}
+.color6{
+    background: rgba(164, 232, 161, 0.9);
+}
+.color7{
+    background: rgba(255, 249, 157, 0.9);
+}
+.color8{
+    background: rgba(246, 187, 128, 0.9);
+}
+.color9{
+    background: rgba(194, 223, 177, 0.9);
+}
+.color10{
+    background: rgba(150, 198, 208, 0.9);
+}
+.color11{
+    background: rgba(144, 195, 186, 0.9);
+}
+.color12{
+    background: rgba(175, 212, 201, 0.9);
+}
+.color13{
+    background: rgba(212, 219, 212, 0.9);
+}
+.color14{
+    background: rgba(225, 170, 217, 0.9);
+}
+.color15{
+    background: rgba(213, 214, 239, 0.9);
+}
+.color16{
+    background: rgba(162, 137, 217, 0.9);
+}
+.color17{
+    background: rgba(194, 205, 174, 0.9);
+}
+.color18{
+    background: rgba(139, 93, 61, 0.9);
+}
+.color19{
+    background: rgba(249, 138, 121, 0.9);
+}
+.color20{
+    background: rgba(46, 125, 178, 0.9);
+}
+.color21{
+    background: rgba(255, 132, 131, 0.9);
+}
+.color22{
+    background: rgba(60, 176, 255, 0.9);
+}
+.color23{
+    background: rgba(204, 203, 28, 0.9);
+}
+.color24{
+    background: rgba(178, 177, 17, 0.9);
+}
+.color25{
+    background: rgba(255, 103, 159, 0.9);
+}
+.color26{
+    background: rgba(108, 102, 232, 0.9);
+}
+.color27{
+    background: rgba(83, 255, 216, 0.9);
+}
+.color28{
+    background: rgba(183, 232, 64, 0.9);
+}
+.color29{
+    background: rgba(255, 182, 71, 0.9);
+}
+
