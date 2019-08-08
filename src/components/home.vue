@@ -1,6 +1,6 @@
 <template>
   <div id="home" style="background-color: azure">
-    <div id="wrapper">
+    <div id="wrapper" style="width: 1010px;margin: auto;">
       <div id="content" style="width: 1010px;margin: auto;border-right: 2px solid;border-right-color: powderblue;">
         <div id="grid-16-8 clearfix">
           <div class="homeTabList">
