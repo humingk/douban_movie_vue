@@ -100,7 +100,7 @@ table {
 }
 
 #wrapper {
-    margin: 0 auto;
+    margin: auto;
 }
 
 #content {
@@ -314,7 +314,7 @@ h2 {
 }
 
 #mainpic a img {
-    margin-bottom: 10px;
+    margin: 4px 0 10px 4px;
 }
 
 #info {
@@ -1167,7 +1167,7 @@ img {
 }
 
 #celebrities .celebrities-list.__oneline li:first-child {
-    margin-left: 0;
+    margin-bottom: 5px;
 }
 
 #celebrities .celebrities-list.from-subject li .info {
@@ -1246,6 +1246,11 @@ img {
 .related-pic-bd img {
     width: 115px;
     height: 115px;
+    cursor: pointer;
+    transition: all 0.6s;
+}
+.article img:hover {
+    transform: scale(1.6);
 }
 
 .related-pic-video {
@@ -1875,6 +1880,8 @@ form {
 
 .article img {
     max-width: 100%;
+    cursor: pointer;
+    transition: all 0.6s;
 }
 
 .main .main-hd {
@@ -2456,7 +2463,7 @@ a {
     /*height: 100%;*/
     width: 100%;
     opacity: 0; /*初始不透明度为0，图片都看不见*/
-    transition: opacity 2s linear; /*--重点--定义一个关于透明度的transition*/
+    transition: opacity 3s linear; /*--重点--定义一个关于透明度的transition*/
     object-fit: cover;
 
 }
@@ -2476,7 +2483,7 @@ a {
 
 /*圆角*/
 .radis {
-    border-radius: 8px;
+    border-radius: 7px 8px 8px 8px;
 }
 
 /*评论板颜色*/

@@ -151,11 +151,14 @@ a {
 
 .nav {
     width: 100%;
-    min-width: 1040px;
-    height: 130px;
+    max-width: 1010px;
+    height: 100px;
     overflow: hidden;
     zoom: 1;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /*.nav .nav-wrap{border-bottom:1px solid #e5ebe4;}*/
@@ -166,14 +169,14 @@ a {
     position: relative;
     padding: 10px 0 5px;
     zoom: 1;
-    top: 25px
+    top: 20px
 }
 
 .nav .nav-logo {
     float: left;
     height: 34px;
     width: 200px;
-    margin-top: 9px
+    margin-left: 10px;
 }
 
 /*.nav .nav-logo{float:left;height:45px;width:175px;margin:0 5px 0 0;}*/
@@ -204,7 +207,7 @@ fieldset legend {
     overflow: visible !important;
     position: relative;
     zoom: 1;
-    padding: 10px 0 15px 0;
+    padding: 0 0 15px 0;
 }
 
 .nav-search fieldset {
@@ -230,10 +233,9 @@ fieldset legend {
 
 .nav-search .inp {
     float: left;
-    width: 470px;
+    width: 460px;
     height: 34px;
-    text-align: center;
-    margin-right: -3px;
+    margin: 5px -3px 0 15px;
     cursor: text;
 }
 
@@ -360,7 +362,7 @@ form {
 }
 
 .selectback {
-    background-color: #c7cbff !important;
+    background-color: #98cff2 !important;
     cursor: pointer
 }
 

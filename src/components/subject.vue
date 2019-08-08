@@ -1,13 +1,13 @@
 <template>
     <div id="subject">
         <div id="backgroundImg">
-            <img class="active forImage" v-if="movieApi && movieApi.photos && movieApi.photos[0]"
+            <img class="active" v-if="movieApi && movieApi.photos && movieApi.photos[0]"
                  :src="movieApi.photos[0].image">
-            <img v-if="index < backgroundMax-1 && movieApi && movieApi.photos && movieApi.photos[index+1]"
+            <img v-if="index < backgroundMax && movieApi && movieApi.photos && movieApi.photos[index]"
                  v-for="(item,index) in movieApi.photos"
-                 :src="movieApi.photos[index+1].image">
+                 :src="movieApi.photos[index].image">
         </div>
-        <div id="wrapper" style="width:1040px">
+        <div id="wrapper" style="width:1010px">
             <vue-loading v-if="!movieBase.movieId"
                          type="spiningDubbles" color="#d9544e"
                          :size="{ width: '100px', height: '100px' }"></vue-loading>
@@ -27,8 +27,9 @@
                                 <div class=" subject clearfix">
                                     <div id="mainpic" class="" v-if="movieApi.images">
                                         <a class="nbgnbg radis" v-if="movieApi.images"
-                                           :href="movieApi.images.large"><img
-                                                :src="movieApi.images.large" rel="noreferrer"></a>
+                                           :href="movieApi.images.large"><img class="radis"
+                                                                              :src="movieApi.images.large"
+                                                                              rel="noreferrer"></a>
                                         <p class="gact"></p>
                                     </div>
                                     <div class="info glassbox">
@@ -141,7 +142,8 @@
                                         </div>
                                     </div>
                                     <!--IMDB评分-->
-                                    <div v-if="imdbApi.imdbID" class="rating_wrap clearbox">
+                                    <div v-if="imdbApi.imdbVotes && imdbApi.imdbVotes!='N/A'"
+                                         class="rating_wrap clearbox">
                                         <div class="clearfix">
                                             <div class="rating_logo ll">
                                                 <el-tooltip
@@ -208,7 +210,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!--Metacritic-->
+                                        <!--Metacriti-->
                                         <div v-if="item.Source=='Metacritic'" class="rating_wrap clearbox"
                                              v-for="item in imdbApi.Ratings">
                                             <div class="clearfix">
@@ -252,7 +254,7 @@
                             </h2>
                             <div class="indent glassbox" id="link-report">
                         <span class="summary" v-if="movieApi.summary">
-                        {{movieApi.summary}}
+                        {{movieApi.summary.split("©")[0]}}
                        </span>
                             </div>
                         </div>
@@ -268,7 +270,7 @@
                             </h2>
                             <ul class="celebrities-list from-subject __oneline">
                                 <li class="celebrity glassbox" v-for="item in movieApi.directors">
-                                    <a :href="'/celebrity/'+item.id" target="_blank" class="">
+                                    <a :href="url_douban+'/celebrity/'+item.id" target="_blank" class="">
                                         <div class="avatar">
                                             <img :src="item.avatars.large" class="radis" v-if="item.avatars"
                                                  rel="noreferrer">
@@ -314,7 +316,7 @@
                                 <i class>图片列表......</i>
                                 <span class="pl"><el-tooltip :content="'豆瓣电影 - '+movieBase.name+' 的所有图片'"
                                                              placement="top"><a
-                                        :href="'/subject/'+movieBase.movieId+'/all_photos'"
+                                        :href="url_douban+ '/subject/'+movieBase.movieId+'/all_photos'"
                                         target="_blank">(共计{{movieApi.photos_count?movieApi.photos_count:"..."}}张)</a></el-tooltip></span>
                             </h2>
                             <ul class="related-pic-bd wide_videos">
@@ -338,7 +340,7 @@
                 </span>
                                 </h2>
                             </div>
-                            <el-carousel :interval="3000" type="card" height="200px">
+                            <el-carousel :interval="commentsTime.movieShort" type="card" height="200px">
                                 <el-carousel-item class="radis glassbox"
                                                   v-for="(item,index) in movieApi.popular_comments" :key="index">
                                     <div>
@@ -373,7 +375,7 @@
                   </span>
                                 </h2>
                             </header>
-                            <el-carousel :interval="3000" type="card" height="180px">
+                            <el-carousel :interval="commentsTime.movieReview" type="card" height="180px">
                                 <el-carousel-item class="radis glassbox main review-item"
                                                   v-for="(item,index) in movieApi.popular_reviews" :key="index">
 
@@ -402,7 +404,8 @@
 
                         <!--网易云音乐-->
 
-                        <div id="all-songs" v-for="item in neteaseSongs" v-if="item.data.hotComments.length !== 0">
+                        <div id="all-songs" v-for="(item,songNum) in neteaseSongs"
+                             v-if="item.data.hotComments.length !== 0">
                             <div id="songs-section">
                                 <div class="mod-hd">
                                     <h2>
@@ -420,7 +423,8 @@
                                 <div class="mod-bd">
                                     <div class="tab-bd">
                                         <div id="song-hot-comments" class="tab">
-                                            <el-carousel :interval="3000" type="card" height="200px">
+                                            <el-carousel :interval="commentsTime.music[songNum]" type="card"
+                                                         height="200px">
                                                 <el-carousel-item class="radis glassbox"
                                                                   v-for="(itemOfSong,index) in item.data.hotComments"
                                                                   :key="index">
@@ -449,7 +453,7 @@
                             </div>
                         </div>
 
-                        <div id="all-albums" v-for="item in neteaseAlbums"
+                        <div id="all-albums" v-for="(item,albumNum) in neteaseAlbums"
                              v-if="item.data.hotComments.length !== 0">
                             <div id="albums-section">
                                 <div class="mod-hd">
@@ -468,7 +472,8 @@
                                 <div class="mod-bd">
                                     <div class="tab-bd">
                                         <div id="album-hot-comments" class="tab">
-                                            <el-carousel :interval="3000" type="card" height="200px">
+                                            <el-carousel :interval="commentsTime.album[albumNum]" type="card"
+                                                         height="200px">
                                                 <el-carousel-item class="radis glassbox"
                                                                   v-for=" (itemOfAlbum,index) in item.data.hotComments"
                                                                   :key="index">
@@ -498,7 +503,7 @@
                             </div>
                         </div>
 
-                        <div id="all-playlists" v-for="item in neteasePlaylists"
+                        <div id="all-playlists" v-for="(item,playlistNum) in neteasePlaylists"
                              v-if="item.data.hotComments.length !== 0">
                             <div id="playlists-section">
                                 <div class="mod-hd">
@@ -517,7 +522,8 @@
                                 <div class="mod-bd">
                                     <div class="tab-bd">
                                         <div id="playlist-hot-comments" class="tab">
-                                            <el-carousel :interval="3000" type="card" height="200px">
+                                            <el-carousel :interval="commentsTime.playlist[playlistNum]" type="card"
+                                                         height="200px">
                                                 <el-carousel-item class="radis glassbox"
                                                                   v-for=" (itemOfPlaylist,index) in item.data.hotComments"
                                                                   :key="index">
@@ -548,7 +554,7 @@
 
                         <!--书籍评论-->
                         <div id="book-comments-section"
-                             v-if="bookComments && bookComments.comments && bookComments.comments.length!=0">
+                             v-if="bookComments && bookComments.comments && bookComments.comments.length>2">
                             <div class="mod-hd">
                                 <h2>
                                     <i class>原著相关 <span style="color:#79078f;"><a
@@ -564,7 +570,7 @@
                             <div class="mod-bd">
                                 <div class="tab-bd">
                                     <div id="book-hot-comments" class="tab">
-                                        <el-carousel :interval="3000" type="card" height="200px">
+                                        <el-carousel :interval="commentsTime.bookShort" type="card" height="200px">
                                             <el-carousel-item class="radis glassbox"
                                                               v-for=" (item,index) in bookComments.comments"
                                                               :key="index">
@@ -591,7 +597,7 @@
                             </div>
                         </div>
                         <div id="book-reviews-section"
-                             v-if="bookReviews && bookReviews.reviews && bookReviews.reviews.length!=0">
+                             v-if="bookReviews && bookReviews.reviews && bookReviews.reviews.length>2">
                             <section class="reviews mod movie-content">
                                 <header>
                                     <h2>
@@ -608,7 +614,7 @@
                                     </h2>
                                 </header>
                                 <div class="review-list">
-                                    <el-carousel :interval="3000" type="card" height="180px">
+                                    <el-carousel :interval="commentsTime.bookReviews" type="card" height="180px">
                                         <el-carousel-item class="radis glassbox"
                                                           v-for="(item,index) in bookReviews.reviews"
                                                           v-if="item.summary && item.summary.toString().charAt(0)!='{'"
@@ -662,10 +668,9 @@
                                          type="bars" color="#d9544e"
                                          :size="{ width: '50px', height: '50px' }"></vue-loading>
                             <aplayer
-                                    style="background-color: transparent"
+                                    style="margin:0;background-color: transparent"
                                     :music="neteaseMusic[0]"
                                     :list="neteaseMusic"
-                                    :showLrc="showLrc"
                                     repeat="repeat-all"
                             >
                             </aplayer>
@@ -688,10 +693,9 @@
                                          :size="{ width: '50px', height: '50px' }"></vue-loading>
                             <aplayer
                                     autoplay
-                                    style="background-color: transparent"
+                                    style="margin:0;background-color: transparent"
                                     :music="neteasePlaylistSongs[0]"
                                     :list="neteasePlaylistSongs"
-                                    :showLrc="showLrc"
                                     :repeat="'repeat-all'"
                             >
                             </aplayer>
@@ -712,10 +716,9 @@
                                          type="bars" color="#d9544e"
                                          :size="{ width: '50px', height: '50px' }"></vue-loading>
                             <aplayer
-                                    style="background-color: transparent"
+                                    style="margin:0;background-color: transparent"
                                     :music="neteaseAlbumSongs[0]"
                                     :list="neteaseAlbumSongs"
-                                    :showLrc="showLrc"
                                     :repeat="'repeat-all'"
                             >
                             </aplayer>
@@ -801,22 +804,19 @@
                             </el-button>
                         </div>
                         <!--资源信息-->
-
+                        <vue-loading v-if="isGettingResult==true"
+                                     type="bars" color="#d9544e"
+                                     :size="{ width: '50px', height: '50px' }"></vue-loading>
                         <div id="resourchResult" v-if="isResourceResult"
                              style="margin-top: 10px;margin-bottom: 20px;">
-                            <vue-loading v-show="resourceResult && resourceResult.length==0"
-                                         type="bars" color="#d9544e"
-                                         :size="{ width: '50px', height: '50px' }"></vue-loading>
+
                             <div class="glassbox" v-show="resourceResult && resourceResult.length!=0">
                                 <h2>
                                     <i class="">资源内容 <span
                                             style="color:#79078f">< {{resourceSearchKeyword}} > </span></i>
                                 </h2>
-                                <vue-loading v-show="resourceResult && resourceResult.length==0"
-                                             type="bars" color="#d9544e"
-                                             :size="{ width: '50px', height: '50px' }"></vue-loading>
                                 <div
-                                        style="box-shadow: 3px 5px 10px 0 rgba(192,192,192,0.2);transition: 0.3s;width: 100%;border-radius: 3px;margin-left: 5px;">
+                                        style="box-shadow: 3px 5px 10px 0 rgba(192,192,192,0.2);transition: 0.3s;width: 98%;border-radius: 3px;margin-left: 5px;">
                                     <div v-for="type in resourceTypeList"
                                          v-if="type.list.length!=0">
                                         <h3 class="resourceTitle"><i>{{type.type}}</i></h3>
@@ -865,9 +865,9 @@
                 numOfAlbums: 2,
                 numOfPlaylists: 2,
                 // 背景图最多展示数
-                backgroundMax: 5,
+                backgroundMax: 6,
                 // 背景图切换时间/s
-                backgroundTime: 10,
+                backgroundTime: 8,
                 // 书籍最大展示数
                 numOfBooks: 2,
                 // 演员的展开与收起
@@ -911,6 +911,8 @@
                 resourceSearch: [],
                 // 电影资源列表
                 resourceResult: [],
+                // 是否正在搜索资源
+                isGettingResult: false,
                 isResourceSearch: true,
                 isResourceResult: false,
                 // 资源不同类型
@@ -976,7 +978,29 @@
                     "color27",
                     "color28",
                     "color29",
-                ]
+                ],
+                // 评论卡片切换时间
+                commentsTime: {
+                    movieShort: 3000,
+                    movieReview: 3000,
+                    music: [
+                        3000,
+                        3000,
+                        3000
+                    ],
+                    playlist: [
+                        3000,
+                        3000,
+                        3000
+                    ],
+                    album: [
+                        3000,
+                        3000,
+                        3000
+                    ],
+                    bookShort: 3000,
+                    bookReviews: 3000
+                },
             }
         },
         components: {
@@ -1037,6 +1061,7 @@
                             document.title = responseBase.data.data.name + this.subTitle;
                             // 更新服务端 评分 (服务器没有此电影时候,更新base包括rate)
                             this.updateRate(responseApi.id, responseApi.rating.average);
+                            this.movieBase.rate = responseApi.rating.average;
                             // 获取 imdb 相关
                             // 豆瓣API没有imdbID...所以仅此情况可以获取
                             // if (this.movieBase.imdbId && this.movieBase.imdbId != '') {
@@ -1573,6 +1598,8 @@
                     this.resourceSearch = [];
                 } else if (requestType == 1) {
                     this.resourceResult = [];
+                    // 开启加载动画
+                    this.isGettingResult = true;
                 }
                 if (searchMax == -1) {
                     searchMax = this.getNowResourceMax();
@@ -1805,6 +1832,8 @@
                             break;
                     }
                 }
+                // 关闭加载动画
+                this.isGettingResult = false;
             },
             // 获取当前资源目录电影最大数
             getNowResourceMax: function () {
@@ -1825,24 +1854,33 @@
             randomBoxColor: function () {
                 return this.boxColor[Math.floor(Math.random() * this.boxColor.length)];
             },
+            // 背景随机颜色
+            randomBkColor: function (max) {
+                return Math.floor(Math.random() * max);
+            },
             // 关于背景图的自动切换
             changeBackgroundImg: function (max, time) {
                 var backgroundImg = document.getElementById("backgroundImg");
                 var imgs = backgroundImg.getElementsByTagName("img");
                 //当前活跃的图片编号
                 var current = 0;
+                // 上一次活跃的图片编号
+                var pre = -1;
                 //定时进行图片切换
                 setInterval(() => {
                     //切换图片 ----
                     //图片淡出
                     imgs[current].className = "";
-                    //自增1
-                    current++;
-                    if (current >= max) current = 0;
+                    //随机背景
+                    current = Math.floor(Math.random() * max);
+                    while (current == pre) {
+                        current = Math.floor(Math.random() * max);
+                    }
+                    pre = current;
                     //图片淡入
                     imgs[current].className = "active";
                 }, 1000 * time);
-            }
+            },
         }
         ,
         filters: {

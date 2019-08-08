@@ -1,7 +1,7 @@
 <template>
-  <div id="home">
+  <div id="home" style="background-color: azure">
     <div id="wrapper">
-      <div id="content">
+      <div id="content" style="width: 1010px;margin: auto;border-right: 2px solid;border-right-color: powderblue;">
         <div id="grid-16-8 clearfix">
           <div class="homeTabList">
             <span :class="'homeTab '+isCurrent('inTheaters')" @click="changeCurrent('inTheaters')">正在热映</span>
