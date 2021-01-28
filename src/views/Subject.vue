@@ -35,17 +35,17 @@
 														 class="animated zoomIn"
 			/>
 		</div>
-		<!--		<vue-lazy-component>-->
-		<!--			<div :element-loading-background="loadingBg"-->
-		<!--					 :element-loading-text="randomMovieLineShort()"-->
-		<!--					 :style="isBorder(subjectState.isResourceGot)+minHeightOfResource"-->
-		<!--					 class="resource-list"-->
-		<!--					 v-loading="!subjectState.isResourceDone">-->
-		<!--				<movie-resource-component :movie-id="parseInt(movieId)"-->
-		<!--																	:name-zh="nameZh"-->
-		<!--																	class="animated zoomIn"/>-->
-		<!--			</div>-->
-		<!--		</vue-lazy-component>-->
+    <vue-lazy-component>
+      <div :element-loading-background="loadingBg"
+           :element-loading-text="randomMovieLineShort()"
+           :style="isBorder(subjectState.isResourceGot)+minHeightOfResource"
+           class="resource-list"
+           v-loading="!subjectState.isResourceDone">
+        <movie-resource-component :movie-id="parseInt(movieId)"
+                                  :name-zh="nameZh"
+                                  class="animated zoomIn"/>
+      </div>
+    </vue-lazy-component>
 		<vue-lazy-component>
 			<div :element-loading-background="loadingBg"
 					 :element-loading-text="randomMovieLineShort()"
